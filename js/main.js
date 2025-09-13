@@ -31,19 +31,38 @@
     const addr = addrEl ? addrEl.textContent.trim() : '';
     const mapsHref = addr ? 'https://www.google.com/maps?q=' + encodeURIComponent(addr) : '';
     const mapLink = byId('map-open');
-    if (mapLink && mapsHref) mapLink.href = mapsHref;
+    if (mapLink) {
+      if (mapsHref) {
+        mapLink.href = mapsHref;
+        mapLink.style.display = '';
+      } else {
+        mapLink.style.display = 'none';
+        mapLink.removeAttribute('href');
+      }
+    }
 
     // X link(s)
-    const xHandle = (cfg.x || '').replace(/^@/, '');
-    const xHref = xHandle ? 'https://x.com/' + xHandle : 'https://x.com/';
-    qsa('[data-bind="x-link"]').forEach(a => { a.href = xHref; });
-    qsa('.x-text[data-bind="x-link"]').forEach(a => { if (xHandle) a.textContent = '@' + xHandle; });
+    const rawHandle = (cfg.x || '').replace(/^@/, '');
+    const safeX = /^[A-Za-z0-9_]{1,15}$/.test(rawHandle) ? rawHandle : '';
+    const xHref = safeX ? 'https://x.com/' + safeX : 'https://x.com/';
+    qsa('[data-bind="x-link"]').forEach(a => {
+      a.href = xHref;
+      // ensure external link flags where applicable
+      if (a.target === '_blank') a.rel = 'noopener noreferrer';
+    });
+    qsa('.x-text[data-bind="x-link"]').forEach(a => { if (safeX) a.textContent = '@' + safeX; });
 
     // LINE button
     const lineURL = (cfg.line || '').trim();
+    const isSafeURL = (u) => {
+      try {
+        const url = new URL(u, location.origin);
+        return url.protocol === 'https:' && (url.hostname === 'line.me' || url.hostname.endsWith('.line.me'));
+      } catch { return false; }
+    };
     qsa('[data-bind="line-link"]').forEach(a => {
-      if (lineURL) { a.href = lineURL; a.style.display = ''; }
-      else { a.style.display = 'none'; }
+      if (isSafeURL(lineURL)) { a.href = lineURL; a.style.display = ''; }
+      else { a.style.display = 'none'; a.removeAttribute('href'); }
     });
 
     // email (plain text)

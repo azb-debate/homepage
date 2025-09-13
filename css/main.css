@@ -65,6 +65,7 @@ a {
 
 .sec {
   padding: 42px 0;
+  scroll-margin-top: 64px; /* sticky header offset */
 }
 
 /* ===== Header / TOC ===== */
@@ -498,6 +499,11 @@ nav.toc a.is-active {
   bottom: 8px;
 }
 
+.basic-card.has-fab-space {
+  padding-right: 88px;
+  padding-bottom: 44px;
+}
+
 .basic-card.pos-rel:has(.linebtn) {
   padding-right: 88px;
   padding-bottom: 44px;
@@ -549,4 +555,14 @@ nav.toc a.is-active {
   button {
     transition: filter 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
   }
+}
+
+/* Focus visibility */
+.toc a:focus-visible,
+.xbtn:focus-visible,
+.linebtn:focus-visible,
+#qa summary:focus-visible {
+  outline: 2px solid rgba(17, 24, 39, 0.28);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
