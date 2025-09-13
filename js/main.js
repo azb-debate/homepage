@@ -52,41 +52,36 @@
   }
 
   /** ===== TOC active highlight (strict, single) ===== */
-  function setupActiveTOC() {
-    const links = qsa('nav.toc a[href^="#"]');
-    const sections = links.map(a => qs(a.getAttribute('href'))).filter(Boolean);
+  function setupActiveTOC(){
+    const links = Array.from(document.querySelectorAll('nav.toc a[href^="#"]'));
+    const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
     if (!sections.length) return;
 
-    const linkFor = (id) => links.find(a => a.getAttribute('href') === '#' + id);
+    const getHeaderH = () => (document.querySelector('.site-header')?.offsetHeight || 56);
+    const setActive = (id) => {
+      links.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + id));
+    };
 
-    let currentId = null;
-    const io = new IntersectionObserver((entries) => {
-      // pick the entry with greatest intersection ratio, tie-breaker by vertical proximity to viewport center
-      const center = window.innerHeight / 2;
-      const best = entries
-        .filter(e => e.isIntersecting)
-        .map(e => {
-          const r = e.target.getBoundingClientRect();
-          const dist = Math.abs((r.top + r.bottom) / 2 - center);
-          return { id: e.target.id, ratio: e.intersectionRatio, dist };
-        })
-        .sort((a,b) => (b.ratio - a.ratio) || (a.dist - b.dist))[0];
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const line = getHeaderH() + 12;
+        let current = sections[0]?.id || null;
+        for (const sec of sections) {
+          const r = sec.getBoundingClientRect();
+          if (r.top <= line && r.bottom > line) { current = sec.id; break; }
+          if (r.top < line) current = sec.id;
+        }
+        if (current) setActive(current);
+        ticking = false;
+      });
+    };
 
-      const nextId = best ? best.id : null;
-      if (nextId && nextId !== currentId) {
-        // clear all first
-        links.forEach(a => a.classList.remove('is-active'));
-        const l = linkFor(nextId);
-        if (l) l.classList.add('is-active');
-        currentId = nextId;
-      }
-    }, {
-      root: null,
-      threshold: [0.25, 0.4, 0.55, 0.7, 0.85], // 厳しめに
-      rootMargin: '-10% 0px -50% 0px'
-    });
-
-    sections.forEach(sec => io.observe(sec));
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
   }
 
   /** ===== footer year ===== */
@@ -96,14 +91,53 @@
     if (el) el.textContent = y;
   }
 
+  /** ===== equal height for .basic-grid (SP only, all cards equal) ===== */
+  function setupEqualHeightsSP(selector='.basic-grid', breakpoint='(max-width: 480px)'){
+    const grid = document.querySelector(selector);
+    if (!grid) return;
+    if (grid.dataset.eqhAttached === '1') return;        // 多重アタッチ防止
+    grid.dataset.eqhAttached = '1';
+
+    const items = Array.from(grid.querySelectorAll('.basic-card'));
+    if (!items.length) return;
+
+    const mq = window.matchMedia(breakpoint);
+
+    const equalizeAll = () => {
+      // PC/タブは解除
+      if (!mq.matches) {
+        items.forEach(el => el.style.height = 'auto');
+        return;
+      }
+      // リセット
+      items.forEach(el => el.style.height = 'auto');
+      // 1カラム時は均等化しない（読みやすさ優先）
+      const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length;
+      if (cols <= 1) return;
+      // 全カードの最大高さを計測し統一
+      const maxH = Math.max(...items.map(el => el.getBoundingClientRect().height));
+      items.forEach(el => el.style.height = maxH + 'px');
+    };
+
+    // 監視：リサイズと内容変化（メール折返し等）
+    const ro = new ResizeObserver(equalizeAll);
+    items.forEach(el => ro.observe(el));
+    mq.addEventListener?.('change', equalizeAll);
+    window.addEventListener('resize', equalizeAll, { passive:true });
+    window.addEventListener('load', equalizeAll);
+
+    equalizeAll();
+  }
+
   /** ===== boot ===== */
   try {
     const cfg = loadConfig();
     applyConfig(cfg);
     setupActiveTOC();
     setYear();
+    setupEqualHeightsSP('.basic-grid', '(max-width: 480px)');
 
-    // self-checks (開発用／表示に影響なし)
+    // self-checks (dev)
     console.assert(qs('#about') && qs('#qa'), 'Required sections exist');
     console.assert(qsa('nav.toc a.is-active').length <= 1, 'TOC active should be <= 1');
   } catch (e) {

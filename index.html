@@ -13,10 +13,13 @@
   <header class="site-header">
     <div class="container hdr">
       <a class="brand" href="#home" aria-label="トップへ">
-        <img src="assets/logo.svg" alt="麻布学園 討論部 ロゴ">
+        <span class ="brand-text">
+          <span class="brand-full">麻布学園討論部</span>
+          <span class="brand-short">討論部</span>
+        </span>
       </a>
       <nav class="toc" aria-label="目次">
-        <a href="#about">討論部について</a>
+        <a href="#about">概要</a>
         <a href="#qa">Q&amp;A</a>
         <a class="xbtn" data-bind="x-link" href="https://x.com/" target="_blank" rel="noopener" aria-label="X（旧Twitter）">
           <img src="assets/x-2.svg" alt="X">
@@ -39,7 +42,7 @@
     <!-- About -->
     <section id="about" class="sec">
       <div class="container">
-        <h1 class="visually-hidden">討論部について</h1>
+        <h1 class="sec-title">概要</h1>
         <p class="lead">社会的な課題を、議論を通じて多角的に理解します。<strong>結論や勝敗は求めません。</strong> 来訪者が安心して意見を持ち寄れる場づくりを大切にしています。</p>
 
         <!-- 基本情報（コンパクト表示） -->
@@ -58,11 +61,14 @@
             </a>
           </div>
           <div class="basic-card pos-rel">
-            <strong>連絡先（メール）</strong>
-            <span>ご連絡はこちらへ<br>【<span data-bind="email">（後日掲載）</span>】</span>
+             <div class="contact-lines">
+               <div class="contact-head">ご連絡はこちらへ</div>
+                 <div class="contact-mail">【<span data-bind="email">（後日掲載）</span>】</div>
+               </div>
+
             <!-- 公式LINE：連絡先カード右下 -->
             <a class="linebtn" data-bind="line-link" href="#" target="_blank" rel="noopener" aria-label="LINEで友だち追加" title="LINEで友だち追加">
-              <img src="/assets/line.svg" alt="LINE">
+              <img src="assets/line.svg" alt="LINE">
             </a>
           </div>
         </div>
@@ -131,7 +137,7 @@
 
           <div class="card"><details>
             <summary><strong>最新情報はどこで見られますか？</strong></summary>
-            <div style="margin-top:8px">公式Xで発信します：<a class="x-text" data-bind="x-link" href="https://x.com/" target="_blank" rel="noopener">@ハンドル</a></div>
+            <div style="margin-top:8px">公式Xにて活動の内容などを投稿しています。：<a class="x-text" data-bind="x-link" href="https://x.com/" target="_blank" rel="noopener">@ハンドル</a></div>
           </details></div>
 
           <div class="card"><details>
@@ -199,7 +205,7 @@
       "addr": "〒106-0046 東京都港区元麻布2-3-29",
       "route": "日比谷線 広尾駅（1番口）徒歩10–11分／大江戸線・南北線 麻布十番駅（4・7番口）徒歩12–14分",
       "x": "azbdebateclub",
-      "email": "",
+      "email": "azabudebateclub@gmail.com",
       "line": "https://line.me/R/ti/p/@054qoioz"
     }
   </script>
