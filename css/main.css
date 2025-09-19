@@ -192,8 +192,9 @@ nav.toc a.is-active {
 }
 
 .hero-inner {
-  height: clamp(320px, 30vw, 560px);
+  aspect-ratio: 16 / 6;
   position: relative;
+  width: 100%;
 }
 
 .hero-img {
@@ -212,10 +213,10 @@ nav.toc a.is-active {
   place-items: center;
   color: #fff;
   font-weight: 800;
-  font-size: clamp(22px, 3.2vw, 44px);
   text-align: center;
   text-shadow: 0 2px 8px rgba(0,0,0,.35);
   padding: 0 2rem;
+  font-size: clamp(18px, 5.2vw, 44px);
 }
 
 .catch {
