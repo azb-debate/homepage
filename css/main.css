@@ -192,9 +192,9 @@ nav.toc a.is-active {
 }
 
 .hero-inner {
-  aspect-ratio: 16 / 6;
   position: relative;
   width: 100%;
+  height: clamp(320px, 30vw, 560px);
 }
 
 .hero-img {
