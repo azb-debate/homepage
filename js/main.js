@@ -1,32 +1,32 @@
 (() => {
   'use strict';
 
-  /** ===== utils ===== */
+  /** ===== ユーティリティ ===== */
   const qs  = (s, el=document) => el.querySelector(s);
   const qsa = (s, el=document) => Array.from(el.querySelectorAll(s));
   const byId = id => document.getElementById(id);
 
-  /** ===== config loader (inline JSON) ===== */
+  /** ===== 設定読み込み（埋め込み JSON） ===== */
   function loadConfig() {
     try {
       const el = byId('club-config');
       if (!el) return {};
       return JSON.parse(el.textContent || '{}');
     } catch (e) {
-      console.warn('config parse failed', e);
+      console.warn('設定の読み込みに失敗しました', e);
       return {};
     }
   }
 
-  /** ===== apply config to DOM ===== */
+  /** ===== 設定値を DOM に適用 ===== */
   function applyConfig(cfg) {
-    // data-bind text fills
+    // data-bind 属性の要素に設定値を流し込む
     qsa('[data-bind]').forEach(el => {
       const key = el.getAttribute('data-bind');
       if (key && cfg[key]) el.textContent = cfg[key];
     });
 
-    // Google Maps link from addr
+    // 住所から Google マップのリンクを生成
     const addrEl = qs('[data-bind="addr"]');
     const addr = addrEl ? addrEl.textContent.trim() : '';
     const mapsHref = addr ? 'https://www.google.com/maps?q=' + encodeURIComponent(addr) : '';
@@ -41,18 +41,18 @@
       }
     }
 
-    // X link(s)
+    // X のリンクをハンドルに合わせて生成
     const rawHandle = (cfg.x || '').replace(/^@/, '');
     const safeX = /^[A-Za-z0-9_]{1,15}$/.test(rawHandle) ? rawHandle : '';
     const xHref = safeX ? 'https://x.com/' + safeX : 'https://x.com/';
     qsa('[data-bind="x-link"]').forEach(a => {
       a.href = xHref;
-      // ensure external link flags where applicable
+      // 新しいタブで開くリンクは rel を安全に維持
       if (a.target === '_blank') a.rel = 'noopener noreferrer';
     });
     qsa('.x-text[data-bind="x-link"]').forEach(a => { if (safeX) a.textContent = '@' + safeX; });
 
-    // LINE button
+    // LINE ボタンのリンク設定
     const lineURL = (cfg.line || '').trim();
     const isSafeURL = (u) => {
       try {
@@ -65,12 +65,12 @@
       else { a.style.display = 'none'; a.removeAttribute('href'); }
     });
 
-    // email (plain text)
+    // メールアドレス（テキストのみ）
     const emailSpan = qs('[data-bind="email"]');
     if (emailSpan) emailSpan.textContent = (cfg.email || '').trim() || '（後日掲載）';
   }
 
-  /** ===== TOC active highlight (strict, single) ===== */
+  /** ===== 目次のアクティブ状態を制御（常に 1 件） ===== */
   function setupActiveTOC(){
     const links = Array.from(document.querySelectorAll('nav.toc a[href^="#"]'));
     const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
@@ -103,14 +103,14 @@
     onScroll();
   }
 
-  /** ===== footer year ===== */
+  /** ===== フッターの年号を更新 ===== */
   function setYear() {
     const y = new Date().getFullYear();
     const el = byId('year');
     if (el) el.textContent = y;
   }
 
-  /** ===== equal height for .basic-grid (SP only, all cards equal) ===== */
+  /** ===== .basic-grid の高さをスマホ時に揃える ===== */
   function setupEqualHeightsSP(selector='.basic-grid', breakpoint='(max-width: 480px)'){
     const grid = document.querySelector(selector);
     if (!grid) return;
@@ -148,7 +148,7 @@
     equalizeAll();
   }
 
-  /** ===== boot ===== */
+  /** ===== 初期化 ===== */
   try {
     const cfg = loadConfig();
     applyConfig(cfg);
@@ -156,10 +156,10 @@
     setYear();
     setupEqualHeightsSP('.basic-grid', '(max-width: 480px)');
 
-    // self-checks (dev)
-    console.assert(qs('#about') && qs('#qa'), 'Required sections exist');
-    console.assert(qsa('nav.toc a.is-active').length <= 1, 'TOC active should be <= 1');
+    // 開発時のセルフチェック
+    console.assert(qs('#about') && qs('#qa'), '必須セクションが存在すること');
+    console.assert(qsa('nav.toc a.is-active').length <= 1, '目次のアクティブリンクは 1 件以下であること');
   } catch (e) {
-    console.error('init error', e);
+    console.error('初期化でエラーが発生しました', e);
   }
 })();

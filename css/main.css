@@ -1,4 +1,4 @@
-/* ===== CSS Variables / Base ===== */
+/* ===== CSS 変数／ベース設定 ===== */
 :root {
   --bg: #ffffff;
   --ink: #0f172a;
@@ -43,7 +43,7 @@ a {
   letter-spacing: 0.01em;
 }
 
-/* ===== Layout ===== */
+/* ===== レイアウト ===== */
 .container {
   width: clamp(320px, 96vw, 1280px);
   margin: 0 auto;
@@ -65,10 +65,10 @@ a {
 
 .sec {
   padding: 42px 0;
-  scroll-margin-top: 64px; /* sticky header offset */
+  scroll-margin-top: 64px; /* スティッキーヘッダー用オフセット */
 }
 
-/* ===== Header / TOC ===== */
+/* ===== ヘッダー／目次 ===== */
 .site-header {
   position: sticky;
   top: 0;
@@ -160,7 +160,7 @@ nav.toc a.is-active {
   font-weight: 700;
 }
 
-/* X icon button (header right) */
+/* X アイコンボタン（ヘッダー右側） */
 .xbtn {
   display: inline-flex;
   align-items: center;
@@ -183,7 +183,7 @@ nav.toc a.is-active {
   display: block;
 }
 
-/* ===== Hero ===== */
+/* ===== ヒーローエリア ===== */
 .hero {
   width: 100vw;
   margin-inline: calc(50% - 50vw);
@@ -231,7 +231,7 @@ nav.toc a.is-active {
   text-align: center;
 }
 
-/* ===== Cards & Elements ===== */
+/* ===== カード／各要素 ===== */
 .card {
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -240,7 +240,7 @@ nav.toc a.is-active {
   padding: 14px;
   display: block;
   width: 100%;
-  margin: 0 0 12px; /* 下だけ余白 */
+  margin: 0 0 12px; /* 下方向のみ余白 */
   break-inside: auto;
 }
 
@@ -249,7 +249,7 @@ nav.toc a.is-active {
   line-height: 1.8;
 }
 
-/* Ensure Q&A cards stack vertically with consistent spacing */
+/* Q&A カードを縦並び・均等余白にする */
 .cards {
   display: flex;
   flex-direction: column;
@@ -280,7 +280,7 @@ nav.toc a.is-active {
   line-height: 1.5;
 }
 
-/* Basic info compact grid */
+/* 基本情報カードのグリッド */
 .basic-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -329,7 +329,7 @@ nav.toc a.is-active {
   }
 }
 
-/* Very small screens: stack as 1 column for readability */
+/* 幅が非常に狭い端末では 1 列表示 */
 @media (max-width: 420px) {
   .basic-grid {
     grid-template-columns: 1fr;
@@ -358,7 +358,7 @@ nav.toc a.is-active {
   }
 }
 
-/* Map icon (compact, upper-right) */
+/* 地図アイコン（右上のコンパクトボタン） */
 .icon-btn {
   position: absolute;
   top: 6px;
@@ -381,7 +381,7 @@ nav.toc a.is-active {
   display: block;
 }
 
-/* Inline headings inside cards */
+/* カード内の見出し */
 .h3-in {
   margin: 0 0 8px;
   font-size: 1rem;
@@ -408,7 +408,7 @@ nav.toc a.is-active {
   color: #374151;
 }
 
-/* readable lists */
+/* 読みやすいリスト */
 .list-compact {
   list-style: none;
   margin: 0;
@@ -438,7 +438,7 @@ nav.toc a.is-active {
   }
 }
 
-/* 2×2 tiles for debate parts (compact) */
+/* ディベート各パートの 2×2 タイル */
 .tiles {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -477,7 +477,7 @@ nav.toc a.is-active {
   }
 }
 
-/* LINE icon button (green circle) */
+/* LINE アイコンボタン（緑の円） */
 .linebtn {
   display: inline-flex;
   align-items: center;
@@ -518,7 +518,7 @@ nav.toc a.is-active {
   padding-bottom: 44px;
 }
 
-/* X link in text */
+/* 本文内の X リンク */
 .x-text {
   color: #1DA1F2;
   text-decoration: underline;
@@ -534,7 +534,7 @@ nav.toc a.is-active {
   outline-offset: 2px;
 }
 
-/* Q&A */
+/* Q&A ブロック */
 #qa details {
   cursor: pointer;
 }
@@ -547,7 +547,7 @@ nav.toc a.is-active {
   display: none;
 }
 
-/* Footer */
+/* フッター */
 .site-footer {
   padding: 28px 0;
   border-top: 1px solid #eef2f7;
@@ -558,7 +558,7 @@ nav.toc a.is-active {
   color: #374151;
 }
 
-/* Small helpers */
+/* 補助的なスタイル */
 @media (prefers-reduced-motion: no-preference) {
   a,
   button {
@@ -566,7 +566,7 @@ nav.toc a.is-active {
   }
 }
 
-/* Focus visibility */
+/* フォーカス可視化 */
 .toc a:focus-visible,
 .xbtn:focus-visible,
 .linebtn:focus-visible,
