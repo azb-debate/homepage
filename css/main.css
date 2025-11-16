@@ -219,6 +219,17 @@ nav.toc a.is-active {
   font-size: clamp(18px, 5.2vw, 44px);
 }
 
+@media (max-width: 800px) {
+  .hero-inner {
+    height: auto;
+    aspect-ratio: 8 / 3;
+  }
+
+  .hero-img {
+    height: 100%;
+  }
+}
+
 .catch {
   font-weight: 800;
   font-size: clamp(20px, 4.6vw, 44px);
