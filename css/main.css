@@ -5,6 +5,11 @@
   --sub: #4b5563;
   --brand: #0b3b8e; /* 学校トーン寄りの藍 */
   --ring: rgba(17, 24, 39, 0.08);
+  --bg-soft: #f5f6fb;
+  --bg-accent: #eef2ff;
+  --card-bg: #ffffff;
+  --brand-grad-start: #0b3b8e;
+  --brand-grad-end: #5b21b6;
 }
 
 * {
@@ -15,10 +20,12 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--bg);
+  background: radial-gradient(circle at 20% 20%, rgba(91, 130, 255, 0.12), transparent 45%) no-repeat,
+    radial-gradient(circle at 80% 0%, rgba(13, 148, 136, 0.1), transparent 35%) no-repeat,
+    var(--bg-soft);
   color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN",
-    "Noto Sans JP", Segoe UI, Roboto, Arial, sans-serif;
+  font-family: "Zen Maru Gothic", "Hiragino Maru Gothic ProN", "Hiragino Kaku Gothic ProN",
+    "Yu Gothic", "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 html {
@@ -64,8 +71,27 @@ a {
 }
 
 .sec {
-  padding: 42px 0;
+  padding: clamp(36px, 8vw, 72px) 0;
   scroll-margin-top: 64px; /* スティッキーヘッダー用オフセット */
+  position: relative;
+  z-index: 0;
+}
+
+.sec::before {
+  content: '';
+  position: absolute;
+  inset: 12px 0;
+  background: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.06);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.sec:hover::before,
+.sec:focus-within::before {
+  opacity: 1;
 }
 
 /* ===== ヘッダー／目次 ===== */
@@ -73,9 +99,10 @@ a {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: saturate(1.6) blur(8px);
-  border-bottom: 1px solid #eef2f7;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: saturate(1.6) blur(12px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
 }
 
 .hdr {
@@ -149,15 +176,23 @@ a {
   padding: 0 10px;
   border-radius: 999px;
   border: 1px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(120deg, rgba(11, 59, 142, 0.35), rgba(99, 102, 241, 0.25)) border-box;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
 }
 
 .toc a:hover {
-  border-color: #e5e7eb;
+  border-color: transparent;
+  transform: translateY(-1px);
 }
 
 nav.toc a.is-active {
   color: var(--brand);
   font-weight: 700;
+  background:
+    linear-gradient(120deg, rgba(11, 59, 142, 0.9), rgba(99, 102, 241, 0.9));
+  color: #fff;
 }
 
 /* X アイコンボタン（ヘッダー右側） */
@@ -188,45 +223,84 @@ nav.toc a.is-active {
   width: 100vw;
   margin-inline: calc(50% - 50vw);
   overflow: clip;
-  background: #000;
+  background: linear-gradient(135deg, rgba(11, 59, 142, 0.12), rgba(2, 132, 199, 0.05));
+  padding: clamp(24px, 5vw, 72px) 0;
 }
 
 .hero-inner {
   position: relative;
-  width: 100%;
-  height: clamp(320px, 30vw, 560px);
+  width: min(1240px, 92vw);
+  height: clamp(320px, 28vw, 560px);
+  margin: 0 auto;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 35px 70px rgba(15, 23, 42, 0.3);
+  isolation: isolate;
+}
+
+.hero-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(165deg, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.35) 55%, rgba(15, 23, 42, 0) 90%);
+  z-index: 1;
 }
 
 .hero-img {
   width: 100%;
   height: 100%;
-  display: block;             
+  display: block;
   object-fit: cover;
   object-position: center 35%;
-  filter: none;
+  filter: saturate(1.15) contrast(1.05);
 }
 
 .hero-title {
   position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
+  inset: auto 0 32px 0;
+  z-index: 2;
   color: #fff;
   font-weight: 800;
-  text-align: center;
-  text-shadow: 0 2px 8px rgba(0,0,0,.35);
-  padding: 0 2rem;
-  font-size: clamp(18px, 5.2vw, 44px);
+  text-align: left;
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  padding: 0 clamp(20px, 5vw, 48px);
+  max-width: min(640px, 80vw);
+  font-size: clamp(22px, 5.8vw, 48px);
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+
+.hero-title::before {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-grad-start), var(--brand-grad-end));
+  margin-bottom: 16px;
 }
 
 @media (max-width: 800px) {
   .hero-inner {
     height: auto;
     aspect-ratio: 8 / 3;
+    border-radius: 20px;
+    width: min(640px, 94vw);
   }
 
   .hero-img {
     height: 100%;
+  }
+
+  .hero-title {
+    inset: auto 0 20px 0;
+    padding: 0 18px;
+    font-size: clamp(22px, 6.8vw, 34px);
+  }
+
+  .hero-title::before {
+    width: 48px;
+    margin-bottom: 10px;
   }
 }
 
@@ -244,15 +318,142 @@ nav.toc a.is-active {
 
 /* ===== カード／各要素 ===== */
 .card {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 1px 0 var(--ring);
-  padding: 14px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background:
+    linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+    linear-gradient(135deg, rgba(11, 59, 142, 0.15), rgba(99, 102, 241, 0.12)) border-box;
+  box-shadow: 0 18px 35px rgba(15, 23, 42, 0.08);
+  padding: 18px;
   display: block;
   width: 100%;
-  margin: 0 0 12px; /* 下方向のみ余白 */
+  margin: 0 0 18px; /* 下方向のみ余白 */
   break-inside: auto;
+  backdrop-filter: blur(2px);
+}
+
+#about {
+  background: radial-gradient(circle at 15% 15%, rgba(59, 130, 246, 0.15), transparent 55%),
+    radial-gradient(circle at 85% 10%, rgba(16, 185, 129, 0.12), transparent 45%),
+    var(--bg-soft);
+}
+
+#about::before {
+  opacity: 0 !important;
+}
+
+#about .container {
+  position: relative;
+  border-radius: clamp(24px, 4vw, 42px);
+  padding: clamp(28px, 5vw, 56px);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 45px 90px rgba(15, 23, 42, 0.12);
+  overflow: hidden;
+}
+
+#about .container::before,
+#about .container::after {
+  content: '';
+  position: absolute;
+  width: clamp(180px, 22vw, 320px);
+  height: clamp(180px, 22vw, 320px);
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.35), rgba(14, 165, 233, 0));
+  filter: blur(0.5px);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#about .container::before {
+  top: -120px;
+  right: -60px;
+}
+
+#about .container::after {
+  bottom: -140px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.28), rgba(236, 72, 153, 0));
+}
+
+#about .container > * {
+  position: relative;
+  z-index: 1;
+}
+
+#about .sec-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(20px, 3vw, 28px);
+}
+
+#about .sec-title::after {
+  content: '';
+  width: clamp(40px, 8vw, 80px);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(120deg, var(--brand-grad-start), var(--brand-grad-end));
+  display: inline-flex;
+}
+
+#about .lead {
+  font-size: clamp(16px, 2.2vw, 20px);
+  line-height: 1.9;
+  margin-bottom: clamp(18px, 4vw, 32px);
+  color: #1f2937;
+}
+
+#about .basic-grid {
+  padding: clamp(16px, 3vw, 26px);
+  border-radius: clamp(20px, 3.5vw, 36px);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.92), rgba(224, 231, 255, 0.6));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 25px 45px rgba(15, 23, 42, 0.08);
+  gap: clamp(12px, 2vw, 18px);
+  margin-bottom: clamp(24px, 5vw, 40px);
+}
+
+#about .basic-card {
+  background:
+    linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+    linear-gradient(135deg, rgba(11, 59, 142, 0.25), rgba(59, 130, 246, 0.1)) border-box;
+  border: 1px solid transparent;
+  box-shadow: 0 15px 32px rgba(15, 23, 42, 0.1);
+  min-height: 120px;
+}
+
+#about .basic-card strong {
+  font-size: 0.95rem;
+}
+
+#about .divider {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(11, 59, 142, 0), rgba(11, 59, 142, 0.35), rgba(11, 59, 142, 0));
+  margin: clamp(26px, 5vw, 42px) 0;
+  border-radius: 999px;
+}
+
+#about .card {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.95), rgba(249, 250, 251, 0.96)) padding-box,
+    linear-gradient(120deg, rgba(11, 59, 142, 0.2), rgba(236, 72, 153, 0.18)) border-box;
+  border: 1px solid transparent;
+  box-shadow: 0 30px 55px rgba(15, 23, 42, 0.09);
+}
+
+#about .card.tight {
+  padding: clamp(20px, 3vw, 28px);
+}
+
+#about .tiles {
+  margin-top: clamp(16px, 3vw, 26px);
+}
+
+#about .attn {
+  background: rgba(254, 249, 195, 0.95);
+  border-color: rgba(251, 191, 36, 0.75);
 }
 
 .card.tight p,
@@ -262,14 +463,24 @@ nav.toc a.is-active {
 
 /* Q&A カードを縦並び・均等余白にする */
 .cards {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
 }
 
 .cards > .card {
   margin: 0;
   width: 100%;
+  height: 100%;
+}
+
+.attn {
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: rgba(254, 243, 199, 0.9);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #7c2d12;
+  font-weight: 600;
 }
 
 .card.sm-6 {
@@ -295,27 +506,41 @@ nav.toc a.is-active {
 .basic-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 18px;
+  gap: 16px;
+  margin-bottom: 24px;
   align-items: stretch;
 }
 
 .basic-card {
   position: relative;
-  padding: 10px;
-  border-radius: 10px;
-  background: #f8fafc;
-  border: 1px solid #e6eef8;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background:
+    linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+    linear-gradient(120deg, rgba(11, 59, 142, 0.2), rgba(59, 130, 246, 0.12)) border-box;
+  border: 1px solid transparent;
   font-size: 14px;
   color: var(--ink);
-  box-shadow: none;
+  box-shadow: 0 18px 30px rgba(15, 23, 42, 0.08);
   box-sizing: border-box;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.basic-card:hover,
+.basic-card:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 25px 40px rgba(15, 23, 42, 0.15);
 }
 
 .basic-card strong {
   display: block;
   font-weight: 700;
   margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+
+.basic-card.is-wide {
+  grid-column: span 2;
 }
 
 @media (max-width: 480px) {
@@ -380,9 +605,11 @@ nav.toc a.is-active {
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.12);
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(120deg, rgba(34, 197, 94, 0.8), rgba(8, 145, 178, 0.4)) border-box;
+  border: 1px solid transparent;
+  box-shadow: 0 14px 20px rgba(15, 23, 42, 0.15);
   transform: translateY(-2px);
 }
 
@@ -428,15 +655,18 @@ nav.toc a.is-active {
 
 .list-compact li {
   position: relative;
-  padding-left: 1.1em;
+  padding-left: 1.4em;
 }
 
 .list-compact li::before {
-  content: '・';
+  content: '';
   position: absolute;
   left: 0;
-  top: 0;
-  color: #6b7280;
+  top: 0.45em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-grad-start), var(--brand-grad-end));
 }
 
 @media (min-width: 700px) {
@@ -458,11 +688,13 @@ nav.toc a.is-active {
 }
 
 .tile {
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  background: #fff;
-  box-shadow: 0 1px 0 var(--ring);
-  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    linear-gradient(135deg, rgba(14, 116, 144, 0.25), rgba(59, 130, 246, 0.12)) border-box;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08);
+  padding: 10px 12px;
   min-height: 48px;
   display: flex;
   flex-direction: column;
@@ -548,14 +780,51 @@ nav.toc a.is-active {
 /* Q&A ブロック */
 #qa details {
   cursor: pointer;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 #qa summary {
   list-style: none;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 #qa summary::-webkit-details-marker {
   display: none;
+}
+
+#qa details[open] {
+  border-color: rgba(11, 59, 142, 0.4);
+  box-shadow: 0 20px 32px rgba(15, 23, 42, 0.12);
+  transform: translateY(-2px);
+}
+
+#qa summary strong {
+  position: relative;
+}
+
+#qa summary strong::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-grad-start), var(--brand-grad-end));
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+#qa details > div {
+  color: var(--sub);
+  line-height: 1.7;
 }
 
 /* フッター */
