@@ -54,6 +54,7 @@
   </script>
 </head>
 <body id="home">
+  <a class="skip-link" href="#main">本文へスキップ</a>
   <!-- Header / TOC -->
   <header class="site-header">
     <div class="container hdr">
@@ -76,12 +77,25 @@
   <!-- Hero -->
   <section class="hero">
     <div class="hero-inner">
-      <img class="hero-img" src="assets/hero.jpg" alt="麻布学園討論部の活動風景">
-      <h1 class="hero-title">議論を通じた多角的な本質の理解へ</h1>
+      <img class="hero-img" src="assets/hero.jpg" alt="麻布学園討論部の活動風景" decoding="async" fetchpriority="high">
+      <div class="hero-content">
+        <p class="hero-kicker">見学歓迎・予約なしOK</p>
+        <h1 class="hero-title">議論を通じた多角的な本質の理解へ</h1>
+        <p class="hero-sub">勝敗にとらわれず、自分の意見と他者の視点を丁寧に磨く場所です。</p>
+        <div class="hero-meta">
+          <span class="hero-chip"><strong>活動日</strong><span data-bind="days">火・木・金（週3回）</span></span>
+          <span class="hero-chip"><strong>教室</strong><span data-bind="room">M1-4</span></span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn line" data-bind="line-link" href="#" target="_blank" rel="noopener noreferrer">LINEで見学相談</a>
+          <a class="btn ghost" data-email-link data-email-cta href="#">メールで連絡</a>
+          <a class="btn ghost" href="#about">概要を見る</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <main>
+  <main id="main" tabindex="-1">
     <!-- About -->
     <section id="about" class="sec">
       <div class="container">
@@ -95,7 +109,7 @@
           <div class="basic-card pos-rel">
             <strong>所在地</strong>
             <span data-bind="addr">〒106-0046 東京都港区元麻布2-3-29</span>
-            <a id="map-open" class="icon-btn" aria-label="Googleマップで開く" href="https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E5%85%83%E9%BA%BB%E5%B8%832-3-29" target="_blank" rel="noopener noreferrer">
+            <a id="map-open" class="icon-btn" aria-label="Googleマップで開く" title="Googleマップで開く" href="https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E5%85%83%E9%BA%BB%E5%B8%832-3-29" target="_blank" rel="noopener noreferrer">
               <!-- 小さめのピン -->
               <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                 <path fill="#34A853" d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7z"/>
@@ -103,11 +117,21 @@
               </svg>
             </a>
           </div>
+          <div class="basic-card">
+            <strong>アクセス</strong>
+            <span data-bind="route">日比谷線 広尾駅（1番口）徒歩10–11分／大江戸線・南北線 麻布十番駅（4・7番口）徒歩12–14分</span>
+          </div>
           <div class="basic-card pos-rel has-fab-space">
-             <div class="contact-lines">
-               <div class="contact-head">ご連絡はこちらへ</div>
-                 <div class="contact-mail">【<span data-bind="email">（後日掲載）</span>】</div>
-               </div>
+            <div class="contact-lines">
+              <div class="contact-head">ご連絡はこちらへ</div>
+              <div class="contact-mail">
+                <span class="contact-label">メール</span>
+                <a class="email-link" data-bind="email" data-email-link href="#">（後日掲載）</a>
+                <button class="copy-btn" type="button" data-copy="email">コピー</button>
+                <span class="copy-note" data-copy-note="email" role="status" aria-live="polite"></span>
+              </div>
+              <div class="contact-note">LINEは返信が早めです。</div>
+            </div>
 
             <!-- 公式LINE：連絡先カード右下 -->
             <a class="linebtn" data-bind="line-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="LINEで友だち追加" title="LINEで友だち追加">
@@ -171,6 +195,10 @@
       <div class="container">
         <h2>Q&amp;A</h2>
         <p class="lead">よくいただく質問にお答えします。詳細はXでも告知します。</p>
+        <div class="qa-controls" role="group" aria-label="Q&amp;Aをまとめて操作">
+          <button class="btn subtle" type="button" data-qa-action="open">すべて開く</button>
+          <button class="btn subtle" type="button" data-qa-action="close">すべて閉じる</button>
+        </div>
         <div class="cards">
 
           <div class="card"><details>
@@ -180,7 +208,7 @@
 
           <div class="card"><details>
             <summary><strong>最新情報はどこで見られますか？</strong></summary>
-              <div style="margin-top:8px">公式Xにて活動の内容などを投稿しています。：<a class="x-text" data-bind="x-link" href="https://x.com/" target="_blank" rel="noopener noreferrer">@ハンドル</a></div>
+              <div style="margin-top:8px">公式Xにて活動の内容などを投稿しています。<a class="x-text" data-bind="x-link" href="https://x.com/" target="_blank" rel="noopener noreferrer">@ハンドル</a></div>
           </details></div>
 
           <div class="card"><details>

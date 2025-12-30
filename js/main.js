@@ -65,9 +65,29 @@
       else { a.style.display = 'none'; a.removeAttribute('href'); }
     });
 
-    // メールアドレス（テキストのみ）
-    const emailSpan = qs('[data-bind="email"]');
-    if (emailSpan) emailSpan.textContent = (cfg.email || '').trim() || '（後日掲載）';
+    // メールアドレスの反映とリンク化 / Email label + mailto
+    const emailRaw = (cfg.email || '').trim();
+    const safeEmail = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(emailRaw) ? emailRaw : '';
+    qsa('[data-bind="email"]').forEach(el => {
+      el.textContent = safeEmail || '（後日掲載）';
+    });
+    qsa('[data-email-link]').forEach(a => {
+      if (safeEmail) {
+        a.href = 'mailto:' + safeEmail;
+        a.style.display = '';
+        a.removeAttribute('aria-disabled');
+        a.removeAttribute('tabindex');
+      } else if (a.hasAttribute('data-email-cta')) {
+        a.style.display = 'none';
+        a.removeAttribute('href');
+      } else {
+        a.removeAttribute('href');
+        a.setAttribute('aria-disabled', 'true');
+        a.setAttribute('tabindex', '-1');
+      }
+    });
+
+    return { email: safeEmail, addr };
   }
 
   /** ===== 目次のアクティブ状態を制御（常に 1 件） ===== */
@@ -78,7 +98,12 @@
 
     const getHeaderH = () => (document.querySelector('.site-header')?.offsetHeight || 56);
     const setActive = (id) => {
-      links.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + id));
+      links.forEach(a => {
+        const active = a.getAttribute('href') === '#' + id;
+        a.classList.toggle('is-active', active);
+        if (active) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      });
     };
 
     let ticking = false;
@@ -108,6 +133,81 @@
     const y = new Date().getFullYear();
     const el = byId('year');
     if (el) el.textContent = y;
+  }
+
+  /** ===== コピー操作（メールなど） / Copy actions ===== */
+  function setupCopyButtons(values) {
+    const buttons = qsa('[data-copy]');
+    if (!buttons.length) return;
+
+    const notes = new Map();
+    qsa('[data-copy-note]').forEach(el => notes.set(el.dataset.copyNote, el));
+
+    const writeText = async (text) => {
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+          return true;
+        }
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.setAttribute('readonly', '');
+        temp.style.position = 'fixed';
+        temp.style.top = '-100vh';
+        document.body.appendChild(temp);
+        temp.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(temp);
+        return ok;
+      } catch {
+        return false;
+      }
+    };
+
+    const flashNote = (key, ok) => {
+      const note = notes.get(key);
+      if (!note) return;
+      note.textContent = ok ? 'コピーしました' : 'コピーできませんでした';
+      note.classList.add('is-visible');
+      clearTimeout(note._timer);
+      note._timer = setTimeout(() => note.classList.remove('is-visible'), 1400);
+    };
+
+    buttons.forEach(btn => {
+      const key = btn.dataset.copy;
+      const text = (values?.[key] || '').trim();
+      btn.disabled = !text;
+      btn.addEventListener('click', async () => {
+        if (!text) return;
+        const ok = await writeText(text);
+        flashNote(key, ok);
+      });
+    });
+  }
+
+  /** ===== Q&A を一括で開閉 / Toggle all Q&A ===== */
+  function setupQAControls() {
+    const container = qs('#qa');
+    if (!container) return;
+
+    const toggleAll = (action) => {
+      const items = qsa('#qa details');
+      if (!items.length) return;
+      items.forEach(d => {
+        if (action === 'open') d.setAttribute('open', '');
+        if (action === 'close') d.removeAttribute('open');
+      });
+    };
+
+    container.addEventListener('click', (e) => {
+      const btn = e.target.closest?.('[data-qa-action]');
+      if (!btn) return;
+      const action = btn.dataset.qaAction;
+      if (action === 'open' || action === 'close') {
+        e.preventDefault();
+        toggleAll(action);
+      }
+    });
   }
 
   /** ===== .basic-grid の高さをスマホ時に揃える ===== */
@@ -151,9 +251,11 @@
   /** ===== 初期化 ===== */
   try {
     const cfg = loadConfig();
-    applyConfig(cfg);
+    const resolved = applyConfig(cfg);
     setupActiveTOC();
     setYear();
+    setupCopyButtons(resolved);
+    setupQAControls();
     setupEqualHeightsSP('.basic-grid', '(max-width: 480px)');
 
     // 開発時のセルフチェック
