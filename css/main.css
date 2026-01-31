@@ -1,25 +1,51 @@
-/* ===== Theme / テーマ ===== */
+/* ===== Theme / テーマ - Traditional & Dignified / 伝統的で格式高く ===== */
 :root {
-  --paper: #f7f2e8;
-  --paper-soft: #fcfaf6;
-  --paper-strong: #efe7d9;
-  --ink: #1d2736;
-  --ink-sub: #4c5868;
-  --navy: #1f3558;
-  --navy-deep: #15243d;
-  --gold: #b08d57;
-  --sage: #6a7b6a;
-  --line: rgba(29, 39, 54, 0.12);
-  --line-strong: rgba(29, 39, 54, 0.2);
-  --shadow-sm: 0 6px 18px rgba(15, 23, 42, 0.08);
-  --shadow-md: 0 18px 36px rgba(15, 23, 42, 0.12);
-  --shadow-lg: 0 26px 54px rgba(15, 23, 42, 0.16);
-  --radius-s: 8px;
-  --radius-m: 16px;
-  --radius-l: 24px;
+  /* Core colors - Deep navy base / 深い紺青を基調 */
+  --bg-primary: #0a1628;
+  --bg-secondary: #0d1b2a;
+  --bg-tertiary: #111d2e;
+
+  /* Ivory text / アイボリー文字色 */
+  --ivory: #f5f5dc;
+  --ivory-soft: rgba(245, 245, 220, 0.85);
+  --ivory-muted: rgba(245, 245, 220, 0.6);
+
+  /* Gold accent / 金色のアクセント */
+  --gold: #c9a227;
+  --gold-light: #d4b43a;
+  --gold-dark: #a88420;
+  --gold-glow: rgba(201, 162, 39, 0.3);
+
+  /* Line colors / 罫線 */
+  --line: rgba(245, 245, 220, 0.2);
+  --line-strong: rgba(245, 245, 220, 0.4);
+  --line-gold: rgba(201, 162, 39, 0.5);
+
+  /* Legacy aliases for compatibility / 互換性のためのエイリアス */
+  --paper: var(--bg-primary);
+  --paper-soft: var(--bg-secondary);
+  --paper-strong: var(--bg-tertiary);
+  --ink: var(--ivory);
+  --ink-sub: var(--ivory-soft);
+  --navy: var(--gold);
+  --navy-deep: var(--gold-dark);
+  --sage: var(--ivory-muted);
+
+  /* Shadows - refined / 洗練された影 */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-gold: 0 4px 20px rgba(201, 162, 39, 0.25);
+
+  /* Radius - minimal / 最小限の角丸 */
+  --radius-s: 4px;
+  --radius-m: 8px;
+  --radius-l: 12px;
   --page-max: 1120px;
-  --font-sans: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
-  --font-serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+
+  /* Typography - All Mincho / 全て明朝体 */
+  --font-serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+  --font-sans: var(--font-serif);
 }
 
 * {
@@ -45,18 +71,21 @@ html {
 
 body {
   min-height: 100%;
-  color: var(--ink);
-  font-family: var(--font-sans);
-  line-height: 1.75;
-  background-color: var(--paper);
+  color: var(--ivory);
+  font-family: var(--font-serif);
+  line-height: 1.85;
+  background-color: var(--bg-primary);
   background-image:
-    radial-gradient(1200px 600px at 10% -10%, rgba(176, 141, 87, 0.18), transparent 60%),
-    radial-gradient(900px 500px at 90% 0%, rgba(106, 123, 106, 0.18), transparent 55%),
-    linear-gradient(rgba(29, 39, 54, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(29, 39, 54, 0.035) 1px, transparent 1px);
-  background-size: auto, auto, 48px 48px, 48px 48px;
+    /* Subtle radial gradients for depth / 奥行きのための微妙なグラデーション */
+    radial-gradient(1200px 600px at 10% -10%, rgba(201, 162, 39, 0.08), transparent 60%),
+    radial-gradient(900px 500px at 90% 0%, rgba(201, 162, 39, 0.05), transparent 55%),
+    /* Fine grid pattern / 繊細なグリッドパターン */
+    linear-gradient(rgba(245, 245, 220, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 245, 220, 0.03) 1px, transparent 1px);
+  background-size: auto, auto, 64px 64px, 64px 64px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  font-weight: 500;
 }
 
 main {
@@ -79,16 +108,18 @@ a {
   position: absolute;
   left: 16px;
   top: 10px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: #fff;
-  color: var(--navy);
+  padding: 10px 16px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--gold);
+  background: var(--bg-primary);
+  color: var(--gold);
   font-weight: 600;
-  box-shadow: var(--shadow-sm);
+  font-family: var(--font-serif);
+  box-shadow: var(--shadow-md);
   transform: translateY(-200%);
   transition: transform 0.2s ease;
   z-index: 100;
+  letter-spacing: 0.06em;
 }
 
 .skip-link:focus-visible {
@@ -119,11 +150,11 @@ h5 {
   content: '';
   width: clamp(48px, 10vw, 92px);
   height: 2px;
-  background: linear-gradient(90deg, var(--gold), rgba(176, 141, 87, 0.2));
+  background: linear-gradient(90deg, var(--gold), var(--gold-glow));
 }
 
 .lead {
-  color: var(--ink-sub);
+  color: var(--ivory-soft);
   font-size: clamp(16px, 2.2vw, 20px);
 }
 
@@ -149,10 +180,10 @@ h5 {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(247, 242, 232, 0.92);
-  backdrop-filter: blur(10px) saturate(1.1);
-  border-bottom: 1px solid var(--line-strong);
-  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+  background: rgba(10, 22, 40, 0.95);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-bottom: 1px solid var(--line-gold);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .hdr {
@@ -173,18 +204,19 @@ h5 {
   content: '';
   width: 28px;
   height: 28px;
-  border-radius: 999px;
+  border-radius: 50%;
   border: 2px solid var(--gold);
-  box-shadow: inset 0 0 0 4px rgba(176, 141, 87, 0.1);
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.75), rgba(176, 141, 87, 0.15));
+  box-shadow: inset 0 0 0 3px rgba(201, 162, 39, 0.15);
+  background: radial-gradient(circle at 30% 30%, rgba(201, 162, 39, 0.3), transparent 70%);
 }
 
 .brand-text {
   font-family: var(--font-serif);
-  font-weight: 700;
+  font-weight: 600;
   font-size: clamp(14px, 3.4vw, 20px);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   white-space: nowrap;
+  color: var(--ivory);
 }
 
 .brand-full {
@@ -214,36 +246,43 @@ h5 {
   display: inline-flex;
   align-items: center;
   height: 34px;
-  padding: 0 14px;
-  border-radius: 999px;
+  padding: 0 16px;
+  border-radius: var(--radius-s);
   border: 1px solid var(--line);
-  background: var(--paper-soft);
-  color: var(--ink-sub);
+  background: transparent;
+  color: var(--ivory-soft);
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.08em;
+  font-family: var(--font-serif);
+  transition: all 0.3s ease;
 }
 
 .toc a:hover {
-  background: #fff;
+  border-color: var(--gold);
+  color: var(--gold);
 }
 
 nav.toc a.is-active {
-  background: var(--navy);
-  border-color: var(--navy);
-  color: #fff;
-  box-shadow: 0 8px 18px rgba(31, 53, 88, 0.2);
+  background: transparent;
+  border-color: var(--gold);
+  color: var(--gold);
+  box-shadow: 0 0 15px rgba(201, 162, 39, 0.2);
 }
 
 .xbtn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 999px;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-s);
   border: 1px solid var(--line);
-  background: #fff;
-  box-shadow: inset 0 0 0 3px rgba(176, 141, 87, 0.1);
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.xbtn:hover {
+  border-color: var(--ivory);
 }
 
 .xbtn img {
@@ -258,42 +297,68 @@ nav.toc a.is-active {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 16px;
-  border-radius: 999px;
+  padding: 12px 20px;
+  border-radius: var(--radius-s);
   border: 1px solid transparent;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.06em;
   font-size: 14px;
   line-height: 1;
   cursor: pointer;
   white-space: nowrap;
+  font-family: var(--font-serif);
+  transition: all 0.3s ease;
 }
 
+/* Golden glossy button / 光沢のある金色ボタン */
 .btn.line {
-  background: #00c300;
-  border-color: #00c300;
-  color: #fff;
-  box-shadow: 0 10px 20px rgba(0, 195, 0, 0.22);
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+  border-color: var(--gold-dark);
+  color: var(--bg-primary);
+  box-shadow: 
+    0 4px 15px rgba(201, 162, 39, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
+.btn.line:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 8px 25px rgba(201, 162, 39, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Ghost button with ivory border / アイボリー枠線のゴーストボタン */
 .btn.ghost {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #fff;
+  background: transparent;
+  border-color: var(--line-strong);
+  color: var(--ivory);
 }
 
+.btn.ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Subtle button / 控えめなボタン */
 .btn.subtle {
-  background: var(--paper-soft);
+  background: transparent;
   border-color: var(--line);
-  color: var(--ink-sub);
+  color: var(--ivory-soft);
 }
 
-.btn:hover {
-  transform: translateY(-1px);
+.btn.subtle:hover {
+  border-color: var(--line-strong);
+  color: var(--ivory);
+  transform: translateY(-2px);
 }
 
 button.btn {
-  font-family: inherit;
+  font-family: var(--font-serif);
 }
 
 @media (max-width: 520px) {
@@ -330,8 +395,8 @@ button.btn {
   margin: 0 auto;
   border-radius: var(--radius-l);
   overflow: hidden;
-  border: 1px solid var(--line-strong);
-  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line-gold);
+  box-shadow: var(--shadow-lg), 0 0 60px rgba(201, 162, 39, 0.1);
   display: flex;
   align-items: flex-end;
   padding: clamp(20px, 5vw, 44px);
@@ -341,9 +406,9 @@ button.btn {
 .hero-inner::before {
   content: '';
   position: absolute;
-  inset: 12px;
-  border-radius: calc(var(--radius-l) - 10px);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  inset: 16px;
+  border-radius: calc(var(--radius-l) - 8px);
+  border: 1px solid var(--line);
   pointer-events: none;
   z-index: 2;
 }
@@ -352,7 +417,7 @@ button.btn {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, rgba(21, 36, 61, 0.78), rgba(21, 36, 61, 0.25) 60%, transparent 100%);
+  background: linear-gradient(120deg, rgba(10, 22, 40, 0.85), rgba(10, 22, 40, 0.6) 55%, rgba(10, 22, 40, 0.3) 100%);
   z-index: 1;
 }
 
@@ -370,16 +435,19 @@ button.btn {
   position: relative;
   z-index: 3;
   margin: 0;
-  color: #fff;
+  color: var(--ivory);
   font-size: clamp(24px, 5.6vw, 48px);
-  line-height: 1.18;
+  line-height: 1.25;
   max-width: min(720px, 90vw);
   padding: clamp(16px, 3vw, 24px) clamp(18px, 4vw, 28px);
-  background: rgba(21, 36, 61, 0.7);
-  border-left: 4px solid var(--gold);
+  background: rgba(10, 22, 40, 0.8);
+  border-left: 3px solid var(--gold);
   border-radius: var(--radius-s);
-  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.35);
-  backdrop-filter: blur(6px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .hero-content {
@@ -392,18 +460,20 @@ button.btn {
 
 .hero-kicker {
   margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--gold);
+  font-family: var(--font-serif);
 }
 
 .hero-sub {
   margin: 0;
   font-size: clamp(14px, 2.4vw, 18px);
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--ivory-soft);
   max-width: 36em;
+  font-weight: 500;
 }
 
 .hero-meta {
@@ -417,12 +487,13 @@ button.btn {
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #fff;
+  border-radius: var(--radius-s);
+  background: rgba(10, 22, 40, 0.6);
+  border: 1px solid var(--line);
+  color: var(--ivory);
   font-size: 0.8rem;
   white-space: nowrap;
+  font-family: var(--font-serif);
 }
 
 .hero-chip strong {
@@ -471,7 +542,7 @@ button.btn {
   padding: clamp(26px, 4vw, 60px);
   border-radius: var(--radius-l);
   border: 1px solid var(--line);
-  background: linear-gradient(180deg, var(--paper-soft), #ffffff 72%);
+  background: transparent;
   box-shadow: var(--shadow-md);
   overflow: hidden;
 }
@@ -480,8 +551,8 @@ button.btn {
   content: '';
   position: absolute;
   inset: 16px;
-  border-radius: calc(var(--radius-l) - 12px);
-  border: 1px dashed rgba(176, 141, 87, 0.28);
+  border-radius: calc(var(--radius-l) - 8px);
+  border: 1px solid var(--line);
   pointer-events: none;
 }
 
@@ -492,6 +563,7 @@ button.btn {
 
 #about .lead {
   margin-bottom: clamp(20px, 4vw, 34px);
+  color: var(--ivory-soft);
 }
 
 #qa .container {
@@ -499,7 +571,7 @@ button.btn {
   padding: clamp(24px, 4vw, 52px);
   border-radius: var(--radius-l);
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.7);
+  background: transparent;
   box-shadow: var(--shadow-md);
   overflow: hidden;
 }
@@ -508,8 +580,8 @@ button.btn {
   content: '';
   position: absolute;
   inset: 16px;
-  border-radius: calc(var(--radius-l) - 12px);
-  border: 1px solid rgba(31, 53, 88, 0.12);
+  border-radius: calc(var(--radius-l) - 8px);
+  border: 1px solid var(--line);
   pointer-events: none;
 }
 
@@ -525,37 +597,35 @@ button.btn {
   padding: clamp(16px, 3vw, 26px);
   border-radius: var(--radius-m);
   border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.7);
+  background: transparent;
   margin-bottom: clamp(22px, 5vw, 40px);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .basic-card {
   position: relative;
   padding: 16px 18px;
-  border-radius: var(--radius-m);
-  background: #fff;
+  border-radius: var(--radius-s);
+  background: transparent;
   border: 1px solid var(--line);
-  border-left: 4px solid var(--navy);
-  box-shadow: var(--shadow-sm);
+  border-left: 2px solid var(--gold);
   font-size: 14px;
-  color: var(--ink);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: var(--ivory);
+  transition: all 0.3s ease;
 }
 
 .basic-card:hover,
 .basic-card:focus-within {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--line-strong);
+  border-left-color: var(--gold);
 }
 
 .basic-card strong {
   display: block;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 6px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   font-family: var(--font-serif);
-  color: var(--navy-deep);
+  color: var(--gold);
 }
 
 .contact-lines {
@@ -579,30 +649,37 @@ button.btn {
 
 .contact-label {
   font-weight: 600;
-  color: var(--ink-sub);
+  color: var(--ivory-soft);
 }
 
 .email-link {
-  color: var(--navy);
+  color: var(--gold);
   text-decoration: underline;
   font-weight: 600;
   word-break: break-all;
 }
 
 .email-link[aria-disabled="true"] {
-  color: var(--ink-sub);
+  color: var(--ivory-muted);
   text-decoration: none;
   pointer-events: none;
 }
 
 .copy-btn {
   border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--paper-soft);
-  color: var(--ink-sub);
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--ivory-soft);
   padding: 4px 10px;
   font-size: 12px;
   cursor: pointer;
+  font-family: var(--font-serif);
+  transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
 }
 
 .copy-btn:disabled {
@@ -612,7 +689,7 @@ button.btn {
 
 .copy-note {
   font-size: 12px;
-  color: var(--sage);
+  color: var(--gold);
   opacity: 0;
   transition: opacity 0.2s ease;
 }
@@ -623,7 +700,7 @@ button.btn {
 
 .contact-note {
   font-size: 12px;
-  color: var(--ink-sub);
+  color: var(--ivory-muted);
 }
 
 .basic-card.has-fab-space,
@@ -647,16 +724,15 @@ button.btn {
 .divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(176, 141, 87, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, var(--line-gold), transparent);
   margin: clamp(24px, 5vw, 40px) 0;
 }
 
 .card {
   position: relative;
   border: 1px solid var(--line);
-  border-radius: var(--radius-m);
-  background: #fff;
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-s);
+  background: transparent;
   padding: 20px 22px;
   margin: 0 0 18px;
 }
@@ -664,12 +740,11 @@ button.btn {
 .card::before {
   content: '';
   position: absolute;
-  left: 18px;
+  left: 20px;
   top: 0;
-  width: 64px;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--navy), var(--gold));
+  width: 48px;
+  height: 2px;
+  background: var(--gold);
 }
 
 .card.tight {
@@ -679,33 +754,38 @@ button.btn {
 .card.tight p,
 .card.tight li {
   line-height: 1.85;
+  color: var(--ivory-soft);
 }
 
 .h3-in {
   margin: 0 0 10px;
   font-size: 1.05rem;
-  font-weight: 700;
+  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 0.6em;
+  color: var(--ivory);
+  font-family: var(--font-serif);
 }
 
 .h4-in {
   margin: 12px 0 8px;
   font-size: 0.98rem;
-  font-weight: 700;
-  color: var(--ink);
+  font-weight: 600;
+  color: var(--ivory);
+  font-family: var(--font-serif);
 }
 
 .chip {
   font-size: 0.74rem;
   line-height: 1;
-  background: var(--paper-strong);
-  border: 1px solid rgba(176, 141, 87, 0.3);
-  border-radius: 999px;
+  background: transparent;
+  border: 1px solid var(--line-gold);
+  border-radius: var(--radius-s);
   padding: 4px 10px;
-  color: var(--navy-deep);
-  letter-spacing: 0.04em;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+  font-family: var(--font-serif);
 }
 
 .list-compact {
@@ -727,8 +807,8 @@ button.btn {
   top: 0.55em;
   width: 6px;
   height: 6px;
-  border-radius: 999px;
-  background: linear-gradient(120deg, var(--navy), var(--gold));
+  border-radius: 50%;
+  background: var(--gold);
 }
 
 @media (min-width: 760px) {
@@ -739,11 +819,11 @@ button.btn {
 }
 
 .attn {
-  border-radius: var(--radius-m);
+  border-radius: var(--radius-s);
   padding: 12px 14px;
-  background: #fdf4d7;
-  border: 1px solid #e6c46f;
-  color: #6b4e19;
+  background: rgba(201, 162, 39, 0.1);
+  border: 1px solid var(--line-gold);
+  color: var(--gold);
   font-weight: 600;
 }
 
@@ -756,9 +836,8 @@ button.btn {
 
 .tile {
   border: 1px solid var(--line);
-  border-radius: var(--radius-m);
-  background: #fff;
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-s);
+  background: transparent;
   padding: 14px 16px;
   display: flex;
   flex-direction: column;
@@ -768,12 +847,14 @@ button.btn {
 .tile h5 {
   margin: 0 0 6px;
   font-size: 1rem;
-  color: var(--navy-deep);
+  color: var(--gold);
+  font-family: var(--font-serif);
+  font-weight: 600;
 }
 
 .tile p {
   margin: 0;
-  color: var(--ink-sub);
+  color: var(--ivory-soft);
   font-size: 14px;
   line-height: 1.7;
 }
@@ -794,10 +875,14 @@ button.btn {
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 999px;
-  background: var(--paper-soft);
+  border-radius: var(--radius-s);
+  background: transparent;
   border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  border-color: var(--gold);
 }
 
 .icon-btn svg {
@@ -810,13 +895,17 @@ button.btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 999px;
-  border: 1px solid #00c300;
-  background: #00c300;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line);
+  background: transparent;
   overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.linebtn:hover {
+  border-color: var(--gold);
 }
 
 .linebtn:hover {
@@ -860,16 +949,14 @@ button.btn {
 #qa details {
   cursor: pointer;
   border: 1px solid var(--line);
-  border-radius: var(--radius-m);
+  border-radius: var(--radius-s);
   padding: 16px 18px;
-  background: #fff;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  background: transparent;
+  transition: all 0.3s ease;
 }
 
 #qa details:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--line-strong);
 }
 
 #qa summary {
@@ -878,7 +965,9 @@ button.btn {
   align-items: center;
   gap: 10px;
   font-size: 1rem;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
+  color: var(--ivory);
+  font-family: var(--font-serif);
 }
 
 #qa summary::-webkit-details-marker {
@@ -898,8 +987,7 @@ button.btn {
 }
 
 #qa details[open] {
-  border-color: rgba(31, 53, 88, 0.4);
-  box-shadow: var(--shadow-md);
+  border-color: var(--line-gold);
 }
 
 #qa summary strong {
@@ -910,34 +998,39 @@ button.btn {
   content: '';
   width: 6px;
   height: 6px;
-  border-radius: 999px;
-  background: linear-gradient(120deg, var(--navy), var(--gold));
+  border-radius: 50%;
+  background: var(--gold);
   display: inline-block;
   margin-right: 8px;
   vertical-align: middle;
 }
 
 #qa details > div {
-  color: var(--ink-sub);
+  color: var(--ivory-soft);
   line-height: 1.75;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
 }
 
 /* ===== Links / リンク ===== */
 .x-text {
-  color: #1d65c1;
+  color: var(--gold);
   text-decoration: underline;
   font-weight: 600;
 }
 
 .x-text:hover {
-  opacity: 0.85;
+  color: var(--gold-light);
 }
 
 /* ===== Footer / フッター ===== */
 .site-footer {
   padding: 28px 0 40px;
   border-top: 1px solid var(--line);
-  color: var(--ink-sub);
+  color: var(--ivory-muted);
+  font-family: var(--font-serif);
+  text-align: center;
 }
 
 /* ===== Motion / モーション ===== */

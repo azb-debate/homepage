@@ -1,12 +1,12 @@
 (() => {
   'use strict';
 
-  /** ===== ユーティリティ ===== */
-  const qs  = (s, el=document) => el.querySelector(s);
-  const qsa = (s, el=document) => Array.from(el.querySelectorAll(s));
+  /** ===== ユーティリティ / Utilities ===== */
+  const qs = (s, el = document) => el.querySelector(s);
+  const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
   const byId = id => document.getElementById(id);
 
-  /** ===== 設定読み込み（埋め込み JSON） ===== */
+  /** ===== 設定読み込み（埋め込み JSON） / Load embedded config ===== */
   function loadConfig() {
     try {
       const el = byId('club-config');
@@ -18,15 +18,15 @@
     }
   }
 
-  /** ===== 設定値を DOM に適用 ===== */
+  /** ===== 設定値を DOM に適用 / Apply config to DOM ===== */
   function applyConfig(cfg) {
-    // data-bind 属性の要素に設定値を流し込む
+    // data-bind 属性の要素に設定値を流し込む / Apply values to data-bind elements
     qsa('[data-bind]').forEach(el => {
       const key = el.getAttribute('data-bind');
       if (key && cfg[key]) el.textContent = cfg[key];
     });
 
-    // 住所から Google マップのリンクを生成
+    // 住所から Google マップのリンクを生成 / Build Google Maps link from address
     const addrEl = qs('[data-bind="addr"]');
     const addr = addrEl ? addrEl.textContent.trim() : '';
     const mapsHref = addr ? 'https://www.google.com/maps?q=' + encodeURIComponent(addr) : '';
@@ -41,18 +41,18 @@
       }
     }
 
-    // X のリンクをハンドルに合わせて生成
+    // X のリンクをハンドルに合わせて生成 / Build X link from handle
     const rawHandle = (cfg.x || '').replace(/^@/, '');
     const safeX = /^[A-Za-z0-9_]{1,15}$/.test(rawHandle) ? rawHandle : '';
     const xHref = safeX ? 'https://x.com/' + safeX : 'https://x.com/';
     qsa('[data-bind="x-link"]').forEach(a => {
       a.href = xHref;
-      // 新しいタブで開くリンクは rel を安全に維持
+      // 新しいタブで開くリンクは rel を安全に維持 / Keep rel safe for new tabs
       if (a.target === '_blank') a.rel = 'noopener noreferrer';
     });
     qsa('.x-text[data-bind="x-link"]').forEach(a => { if (safeX) a.textContent = '@' + safeX; });
 
-    // LINE ボタンのリンク設定
+    // LINE ボタンのリンク設定 / Configure LINE links
     const lineURL = (cfg.line || '').trim();
     const isSafeURL = (u) => {
       try {
@@ -90,8 +90,8 @@
     return { email: safeEmail, addr };
   }
 
-  /** ===== 目次のアクティブ状態を制御（常に 1 件） ===== */
-  function setupActiveTOC(){
+  /** ===== 目次のアクティブ状態を制御（常に 1 件） / Keep TOC active state (single) ===== */
+  function setupActiveTOC() {
     const links = Array.from(document.querySelectorAll('nav.toc a[href^="#"]'));
     const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
     if (!sections.length) return;
@@ -128,7 +128,7 @@
     onScroll();
   }
 
-  /** ===== フッターの年号を更新 ===== */
+  /** ===== フッターの年号を更新 / Update footer year ===== */
   function setYear() {
     const y = new Date().getFullYear();
     const el = byId('year');
@@ -210,11 +210,11 @@
     });
   }
 
-  /** ===== .basic-grid の高さをスマホ時に揃える ===== */
-  function setupEqualHeightsSP(selector='.basic-grid', breakpoint='(max-width: 480px)'){
+  /** ===== .basic-grid の高さをスマホ時に揃える / Equalize card heights on mobile ===== */
+  function setupEqualHeightsSP(selector = '.basic-grid', breakpoint = '(max-width: 480px)') {
     const grid = document.querySelector(selector);
     if (!grid) return;
-    if (grid.dataset.eqhAttached === '1') return;        // 多重アタッチ防止
+    if (grid.dataset.eqhAttached === '1') return; // 多重アタッチ防止 / Avoid duplicate attachment
     grid.dataset.eqhAttached = '1';
 
     const items = Array.from(grid.querySelectorAll('.basic-card'));
@@ -223,32 +223,32 @@
     const mq = window.matchMedia(breakpoint);
 
     const equalizeAll = () => {
-      // PC/タブは解除
+      // PC/タブは解除 / Disable for desktop/tablet
       if (!mq.matches) {
         items.forEach(el => el.style.height = 'auto');
         return;
       }
-      // リセット
+      // リセット / Reset
       items.forEach(el => el.style.height = 'auto');
-      // 1カラム時は均等化しない（読みやすさ優先）
+      // 1カラム時は均等化しない（読みやすさ優先） / Skip on single-column
       const cols = getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length;
       if (cols <= 1) return;
-      // 全カードの最大高さを計測し統一
+      // 全カードの最大高さを計測し統一 / Apply max height to all cards
       const maxH = Math.max(...items.map(el => el.getBoundingClientRect().height));
       items.forEach(el => el.style.height = maxH + 'px');
     };
 
-    // 監視：リサイズと内容変化（メール折返し等）
+    // 監視：リサイズと内容変化（メール折返し等） / Observe resize and content changes
     const ro = new ResizeObserver(equalizeAll);
     items.forEach(el => ro.observe(el));
     mq.addEventListener?.('change', equalizeAll);
-    window.addEventListener('resize', equalizeAll, { passive:true });
+    window.addEventListener('resize', equalizeAll, { passive: true });
     window.addEventListener('load', equalizeAll);
 
     equalizeAll();
   }
 
-  /** ===== 初期化 ===== */
+  /** ===== 初期化 / Initialize ===== */
   try {
     const cfg = loadConfig();
     const resolved = applyConfig(cfg);
@@ -258,7 +258,7 @@
     setupQAControls();
     setupEqualHeightsSP('.basic-grid', '(max-width: 480px)');
 
-    // 開発時のセルフチェック
+    // 開発時のセルフチェック / Dev-time self checks
     console.assert(qs('#about') && qs('#qa'), '必須セクションが存在すること');
     console.assert(qsa('nav.toc a.is-active').length <= 1, '目次のアクティブリンクは 1 件以下であること');
   } catch (e) {
