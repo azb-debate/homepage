@@ -6,6 +6,173 @@
   const qsa = (s, el = document) => Array.from(el.querySelectorAll(s));
   const byId = id => document.getElementById(id);
 
+  /** ===== ページローダー制御 / Page loader control ===== */
+  function setupPageLoader() {
+    const body = document.body;
+    const loader = qs('.page-loader');
+    if (!body || !loader) return Promise.resolve();
+
+    const storageKey = 'azb_loader_seen_session_v1';
+    const minDuration = 800;
+    const maxDuration = 2500;
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+
+    let resolveDone;
+    const done = new Promise(resolve => { resolveDone = resolve; });
+    let finished = false;
+
+    const finish = (instant = false) => {
+      if (finished) return;
+      finished = true;
+      body.classList.remove('is-loading');
+      body.classList.add('is-loaded');
+      loader.setAttribute('aria-hidden', 'true');
+
+      if (instant || reduceMotion) {
+        loader.style.display = 'none';
+        resolveDone();
+        return;
+      }
+      window.setTimeout(() => {
+        loader.style.display = 'none';
+        resolveDone();
+      }, 320);
+    };
+
+    let alreadySeen = false;
+    try {
+      alreadySeen = sessionStorage.getItem(storageKey) === '1';
+    } catch {
+      alreadySeen = false;
+    }
+
+    if (reduceMotion || alreadySeen) {
+      finish(true);
+      return done;
+    }
+
+    let minReady = false;
+    let loadReady = document.readyState === 'complete';
+
+    const maybeFinish = () => {
+      if (minReady && loadReady) finish(false);
+    };
+
+    window.addEventListener('load', () => {
+      loadReady = true;
+      maybeFinish();
+    }, { once: true });
+
+    window.setTimeout(() => {
+      minReady = true;
+      maybeFinish();
+    }, minDuration);
+
+    // 画像遅延時の固着防止 / Fail-safe to avoid loader lock
+    window.setTimeout(() => {
+      minReady = true;
+      loadReady = true;
+      maybeFinish();
+    }, maxDuration);
+
+    try {
+      sessionStorage.setItem(storageKey, '1');
+    } catch {
+      // ignore storage errors / ストレージ不可時は毎回表示
+    }
+
+    return done;
+  }
+
+  /** ===== 要素のインビュー演出 / In-view motion ===== */
+  function setupInViewMotion() {
+    const targets = qsa('[data-motion]');
+    if (!targets.length) return;
+
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    const isInViewport = (el) => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight || 0;
+      return r.top < vh * 0.9 && r.bottom > 0;
+    };
+
+    document.body.classList.add('motion-enhanced');
+
+    if (reduceMotion) {
+      targets.forEach(el => el.classList.add('is-inview'));
+      return;
+    }
+
+    targets.forEach(el => {
+      if (isInViewport(el)) el.classList.add('is-inview');
+    });
+
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(el => el.classList.add('is-inview'));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-inview');
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -10% 0px'
+    });
+
+    targets.forEach(el => io.observe(el));
+  }
+
+  /** ===== パララックス演出 / Parallax motion ===== */
+  function setupParallaxMotion() {
+    const layers = qsa('[data-parallax]');
+    if (!layers.length) return;
+
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    if (reduceMotion) {
+      layers.forEach(el => el.style.setProperty('--parallax-y', '0px'));
+      return;
+    }
+
+    const rootStyles = getComputedStyle(document.documentElement);
+    const desktopScale = parseFloat(rootStyles.getPropertyValue('--parallax-scale-desktop')) || 1;
+    const mobileScale = parseFloat(rootStyles.getPropertyValue('--parallax-scale-mobile')) || 0.75;
+    const mobileMQ = window.matchMedia('(max-width: 760px)');
+    let currentScale = mobileMQ.matches ? mobileScale : desktopScale;
+
+    const compute = () => {
+      const y = window.scrollY || window.pageYOffset || 0;
+      layers.forEach(el => {
+        const factor = parseFloat(el.dataset.parallax || '0');
+        const offset = y * factor * currentScale;
+        el.style.setProperty('--parallax-y', offset.toFixed(2) + 'px');
+      });
+    };
+
+    let ticking = false;
+    const onFrame = () => {
+      compute();
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(onFrame);
+    };
+    const onMQChange = () => {
+      currentScale = mobileMQ.matches ? mobileScale : desktopScale;
+      onScroll();
+    };
+
+    mobileMQ.addEventListener?.('change', onMQChange);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+  }
+
   /** ===== 設定読み込み（埋め込み JSON） / Load embedded config ===== */
   function loadConfig() {
     try {
@@ -250,6 +417,7 @@
 
   /** ===== 初期化 / Initialize ===== */
   try {
+    const loaderDone = setupPageLoader();
     const cfg = loadConfig();
     const resolved = applyConfig(cfg);
     setupActiveTOC();
@@ -257,6 +425,10 @@
     setupCopyButtons(resolved);
     setupQAControls();
     setupEqualHeightsSP('.basic-grid', '(max-width: 480px)');
+    Promise.resolve(loaderDone).finally(() => {
+      setupInViewMotion();
+      setupParallaxMotion();
+    });
 
     // 開発時のセルフチェック / Dev-time self checks
     console.assert(qs('#about') && qs('#qa'), '必須セクションが存在すること');
