@@ -173,6 +173,84 @@
     onScroll();
   }
 
+  /** ===== スクロール進捗をヘッダーへ反映 / Sync scroll progress to header ===== */
+  function setupScrollProgressEffect() {
+    const root = document.documentElement;
+    if (!root) return;
+
+    let ticking = false;
+    const update = () => {
+      const scroller = document.scrollingElement || document.documentElement;
+      const max = Math.max(1, scroller.scrollHeight - window.innerHeight);
+      const y = window.scrollY || window.pageYOffset || 0;
+      const progress = Math.min(1, Math.max(0, y / max));
+      root.style.setProperty('--scroll-progress', progress.toFixed(4));
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+  }
+
+  /** ===== ヒーローの追従ライト / Hero pointer spotlight ===== */
+  function setupHeroSpotlightEffect() {
+    const hero = qs('.hero-inner');
+    if (!hero) return;
+
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    const finePointer = window.matchMedia?.('(pointer: fine)')?.matches;
+    if (reduceMotion || !finePointer) return;
+
+    let rafId = 0;
+    let targetX = 52;
+    let targetY = 40;
+    let currentX = targetX;
+    let currentY = targetY;
+
+    const queue = () => {
+      if (rafId) return;
+      rafId = requestAnimationFrame(() => {
+        const dx = targetX - currentX;
+        const dy = targetY - currentY;
+        currentX += dx * 0.16;
+        currentY += dy * 0.16;
+        hero.style.setProperty('--hero-spot-x', currentX.toFixed(2) + '%');
+        hero.style.setProperty('--hero-spot-y', currentY.toFixed(2) + '%');
+        rafId = 0;
+        if (Math.abs(dx) > 0.08 || Math.abs(dy) > 0.08) queue();
+      });
+    };
+
+    const updateTarget = (clientX, clientY) => {
+      const rect = hero.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const nx = ((clientX - rect.left) / rect.width) * 100;
+      const ny = ((clientY - rect.top) / rect.height) * 100;
+      targetX = Math.min(92, Math.max(8, nx));
+      targetY = Math.min(84, Math.max(12, ny));
+      queue();
+    };
+
+    hero.addEventListener('pointermove', (e) => {
+      if (e.pointerType && e.pointerType !== 'mouse') return;
+      updateTarget(e.clientX, e.clientY);
+    });
+    hero.addEventListener('pointerenter', (e) => {
+      updateTarget(e.clientX, e.clientY);
+    });
+    hero.addEventListener('pointerleave', () => {
+      targetX = 52;
+      targetY = 40;
+      queue();
+    });
+  }
+
   /** ===== 設定読み込み（埋め込み JSON） / Load embedded config ===== */
   function loadConfig() {
     try {
@@ -262,6 +340,8 @@
     const links = Array.from(document.querySelectorAll('nav.toc a[href^="#"]'));
     const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
     if (!sections.length) return;
+    const sectionIds = new Set(sections.map(sec => sec.id));
+    const getHashId = () => decodeURIComponent(location.hash || '').replace(/^#/, '');
 
     const getHeaderH = () => (document.querySelector('.site-header')?.offsetHeight || 56);
     const setActive = (id) => {
@@ -278,20 +358,66 @@
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const line = getHeaderH() + 12;
+        const line = getHeaderH() + 4;
         let current = sections[0]?.id || null;
         for (const sec of sections) {
           const r = sec.getBoundingClientRect();
           if (r.top <= line && r.bottom > line) { current = sec.id; break; }
           if (r.top < line) current = sec.id;
         }
+        const scroller = document.scrollingElement || document.documentElement;
+        const nearBottom = (window.innerHeight + (window.scrollY || window.pageYOffset || 0)) >= (scroller.scrollHeight - 2);
+        if (nearBottom) current = sections[sections.length - 1]?.id || current;
         if (current) setActive(current);
         ticking = false;
       });
     };
 
+    const alignHashTarget = () => {
+      const id = getHashId();
+      if (!id || !sectionIds.has(id)) return;
+      const target = byId(id);
+      if (!target) return;
+      const top = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
+      const nextY = Math.max(0, Math.round(top - getHeaderH()));
+      // 初回描画後のレイアウトずれを吸収 / Re-align hash target after layout settles
+      window.scrollTo({ top: nextY, behavior: 'auto' });
+    };
+
+    const syncHashPosition = () => {
+      const id = getHashId();
+      if (id && sectionIds.has(id)) setActive(id);
+      alignHashTarget();
+      requestAnimationFrame(() => {
+        alignHashTarget();
+        onScroll();
+      });
+      window.setTimeout(() => {
+        alignHashTarget();
+        onScroll();
+      }, 120);
+    };
+
+    links.forEach(a => {
+      a.addEventListener('click', () => {
+        const id = (a.getAttribute('href') || '').replace(/^#/, '');
+        if (id && sectionIds.has(id)) setActive(id);
+      });
+    });
+
+    window.addEventListener('hashchange', () => {
+      syncHashPosition();
+    });
+
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
+    if (location.hash) {
+      if (document.readyState === 'complete') {
+        syncHashPosition();
+      } else {
+        window.addEventListener('load', syncHashPosition, { once: true });
+      }
+    }
     onScroll();
   }
 
@@ -421,6 +547,7 @@
     const cfg = loadConfig();
     const resolved = applyConfig(cfg);
     setupActiveTOC();
+    setupScrollProgressEffect();
     setYear();
     setupCopyButtons(resolved);
     setupQAControls();
@@ -428,6 +555,7 @@
     Promise.resolve(loaderDone).finally(() => {
       setupInViewMotion();
       setupParallaxMotion();
+      setupHeroSpotlightEffect();
     });
 
     // 開発時のセルフチェック / Dev-time self checks
