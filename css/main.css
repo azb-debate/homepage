@@ -308,6 +308,8 @@ p {
 }
 
 .brand-text {
+  display: inline-flex;
+  align-items: center;
   font-family: var(--font-serif);
   font-size: clamp(0.98rem, 2.3vw, 1.3rem);
   font-weight: 700;
@@ -425,9 +427,10 @@ p {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(50% 44% at var(--hero-spot-x) var(--hero-spot-y), rgba(255, 255, 255, 0.22), transparent 68%),
-    linear-gradient(112deg, rgba(24, 43, 67, 0.84) 0%, rgba(24, 43, 67, 0.67) 44%, rgba(24, 43, 67, 0.3) 100%),
-    linear-gradient(180deg, rgba(12, 22, 34, 0.02), rgba(12, 22, 34, 0.36));
+    radial-gradient(48% 42% at var(--hero-spot-x) var(--hero-spot-y), rgba(255, 255, 255, 0.24), transparent 68%),
+    linear-gradient(92deg, rgba(15, 30, 50, 0.92) 0%, rgba(22, 40, 61, 0.82) 33%, rgba(29, 48, 74, 0.45) 66%, rgba(29, 48, 74, 0.16) 100%),
+    radial-gradient(72% 90% at 18% 38%, rgba(59, 101, 145, 0.32), transparent 72%),
+    linear-gradient(180deg, rgba(12, 22, 34, 0.08), rgba(12, 22, 34, 0.48));
   z-index: 1;
 }
 
@@ -457,8 +460,8 @@ p {
   position: relative;
   z-index: 3;
   display: grid;
-  gap: 12px;
-  max-width: min(720px, 94vw);
+  gap: 13px;
+  max-width: min(690px, 92vw);
 }
 
 .hero-kicker {
@@ -512,6 +515,25 @@ p {
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 6px;
+}
+
+.hero-actions .btn:first-child {
+  min-height: 46px;
+  padding-inline: 22px;
+  box-shadow:
+    0 14px 28px rgba(47, 138, 103, 0.32),
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset;
+}
+
+.hero-actions .btn:nth-child(2) {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08));
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-actions .btn:last-child {
+  background: linear-gradient(180deg, rgba(255, 247, 231, 0.16), rgba(255, 247, 231, 0.08));
+  border-color: rgba(216, 191, 121, 0.42);
+  color: rgba(255, 252, 246, 0.94);
 }
 
 .btn {
@@ -1299,6 +1321,23 @@ body.motion-enhanced #qa details[data-motion][open] > div {
 }
 
 @media (min-width: 761px) {
+  #qa .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 18px;
+    max-width: 1060px;
+  }
+
+  #qa details {
+    min-height: 100%;
+    padding: 17px 18px;
+  }
+
+  #qa summary {
+    min-height: 2.9em;
+  }
+}
+
+@media (min-width: 761px) {
   .cols-2 {
     columns: 2;
     column-gap: 24px;
@@ -1341,12 +1380,25 @@ body.motion-enhanced #qa details[data-motion][open] > div {
   }
 
   .hero-actions {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: stretch;
+    gap: 10px;
   }
 
   .hero-actions .btn {
     width: 100%;
+  }
+
+  .hero-actions .btn:first-child {
+    grid-column: 1 / -1;
+    min-height: 50px;
+  }
+
+  .hero-actions .btn:not(:first-child) {
+    min-height: 42px;
+    padding-inline: 14px;
+    font-size: 0.82rem;
   }
 
   .tiles {
@@ -1361,7 +1413,7 @@ body.motion-enhanced #qa details[data-motion][open] > div {
 
 @media (max-width: 520px) {
   :root {
-    --header-h: 111px;
+    --header-h: 114px;
     --motion-mid: 680ms;
     --motion-slow: 1280ms;
     --parallax-scale-mobile: 0.68;
@@ -1371,12 +1423,30 @@ body.motion-enhanced #qa details[data-motion][open] > div {
     min-height: 58px;
   }
 
+  .brand {
+    gap: 10px;
+    min-height: 44px;
+  }
+
+  .brand::before {
+    width: 24px;
+    height: 24px;
+  }
+
+  .brand-text {
+    display: inline-block;
+    font-size: 0.96rem;
+    letter-spacing: 0.04em;
+    white-space: normal;
+    line-height: 1.08;
+  }
+
   .brand-full {
-    display: none;
+    display: inline;
   }
 
   .brand-short {
-    display: inline;
+    display: none;
   }
 
   .header-nav {
@@ -1443,6 +1513,15 @@ body.motion-enhanced #qa details[data-motion][open] > div {
 }
 
 @media (max-width: 360px) {
+  :root {
+    --header-h: 110px;
+  }
+
+  .brand-text {
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+  }
+
   .toc {
     gap: 4px;
   }
@@ -1459,6 +1538,14 @@ body.motion-enhanced #qa details[data-motion][open] > div {
     min-width: 30px;
     height: 30px;
     font-size: 0.72rem;
+  }
+
+  .hero-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions .btn:first-child {
+    grid-column: auto;
   }
 
   .xbtn img {
