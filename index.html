@@ -29,7 +29,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/main.css">
-  <noscript><style>.page-loader{display:none!important;}</style></noscript>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -55,59 +54,44 @@
   </script>
 </head>
 <body id="home">
-  <script>document.body.classList.add('is-loading');</script>
-  <div class="page-loader" role="status" aria-live="polite" aria-label="読み込み中">
-    <div class="page-loader__inner">
-      <span class="page-loader__mark" aria-hidden="true"></span>
-      <span class="page-loader__text">Loading...</span>
-    </div>
-  </div>
   <a class="skip-link" href="#main">本文へスキップ</a>
 
   <header class="site-header">
-    <div class="header-top">
-      <div class="container hdr">
-        <a class="brand" href="#home" aria-label="トップへ">
-          <span class="brand-text">
-            <span class="brand-full">麻布学園<wbr>討論部</span>
-            <span class="brand-short">討論部</span>
-          </span>
-        </a>
-      </div>
-    </div>
-    <div class="header-nav">
-      <div class="container">
-        <nav class="toc" aria-label="目次">
-          <a href="#about">概要</a>
-          <a href="#visit">見学の要点</a>
-          <a href="#parents">保護者向け</a>
-          <a href="#qa">Q&amp;A</a>
-          <a class="xbtn" data-bind="x-link" href="https://x.com/" target="_blank" rel="noopener noreferrer" aria-label="X（旧Twitter）">
-            <img src="assets/x-2.svg" alt="X">
-          </a>
-        </nav>
-      </div>
+    <div class="container hdr">
+      <a class="brand" href="#home" aria-label="トップへ">
+        <span class="brand-text">
+          <span class="brand-full">麻布学園<wbr>討論部</span>
+          <span class="brand-short">討論部</span>
+        </span>
+      </a>
+      <nav class="toc" aria-label="目次">
+        <a href="#about">30秒でわかる</a>
+        <a href="#visit">初めての方へ</a>
+        <a href="#parents">保護者向け</a>
+        <a href="#qa">Q&amp;A</a>
+      </nav>
     </div>
   </header>
 
   <section class="hero">
     <div class="container">
-      <div class="hero-inner motion-layer" data-motion data-parallax="-0.03">
+      <div class="hero-inner motion-layer" data-motion>
         <img class="hero-img" src="assets/hero.jpg" alt="麻布学園討論部の活動風景" decoding="async" fetchpriority="high">
-        <div class="hero-content motion-layer" data-motion data-parallax="-0.015">
+        <div class="hero-content motion-layer" data-motion>
           <p class="hero-kicker">見学歓迎・予約なしOK</p>
-          <h1 class="hero-title">議論を通じた多角的な本質の理解へ</h1>
-          <p class="hero-sub">勝敗にとらわれず、多角的な理解を深めます。新入生と保護者に分かりやすい入門設計です。</p>
+          <h1 class="hero-title">まずは気軽に見学から。<br>議論で、考える力を深める。</h1>
+          <p class="hero-sub">準備はほとんど不要。勝敗よりも「多角的に考えること」を大切にする部です。新入生が入りやすい導線で、保護者の方にも活動方針が伝わるようにまとめています。</p>
           <div class="hero-meta">
             <span class="hero-chip"><strong>活動日</strong><span data-bind="days">火・木・金（週3回）</span></span>
             <span class="hero-chip"><strong>教室</strong><span data-bind="room">M1-4</span></span>
+            <span class="hero-chip"><strong>準備</strong><span>基本不要</span></span>
           </div>
           <div class="hero-actions">
             <a class="btn line" data-bind="line-link" href="#" target="_blank" rel="noopener noreferrer">LINEで見学相談</a>
             <a class="btn ghost" data-email-link data-email-cta href="#">メールで連絡</a>
-            <a class="btn ghost" href="#about">概要を見る</a>
+            <a class="btn ghost" href="#about">30秒で概要を見る</a>
           </div>
-          <p class="hero-note">LINEは返信が早めです。</p>
+          <p class="hero-note">LINEは返信が早めです。事前連絡なしでの見学もできます。</p>
         </div>
       </div>
     </div>
@@ -115,210 +99,261 @@
 
   <main id="main" tabindex="-1">
     <section id="about" class="sec">
-      <div class="container">
-        <div class="section-head motion-layer" data-motion data-parallax="-0.01">
-          <h2 class="sec-title">概要</h2>
-          <p class="lead">麻布学園の討論部（AZB Debate）は、議論を通じて社会的な課題を多角的に理解します。<strong>結論や勝敗は求めません。</strong> 安心して意見を持ち寄れる場づくりを大切にしています。</p>
+      <div class="container section-shell section-shell--warm">
+        <div class="section-head motion-layer" data-motion>
+          <h2 class="sec-title">30秒でわかる見学情報</h2>
+          <p class="lead">「まず見に行ってみたい」と思ったときに必要な情報を、最短で確認できる形にまとめました。初参加でも準備の負担はほとんどありません。</p>
         </div>
 
-        <div class="basic-grid">
-          <div class="basic-card" data-motion><strong>活動日</strong><span data-bind="days">火・木・金（週3回）</span></div>
-          <div class="basic-card" data-motion><strong>活動教室</strong><span data-bind="room">M1-4</span></div>
-          <div class="basic-card pos-rel" data-motion>
-            <strong>所在地</strong>
-            <span data-bind="addr">〒106-0046 東京都港区元麻布2-3-29</span>
-            <a id="map-open" class="icon-btn" aria-label="Googleマップで開く" title="Googleマップで開く" href="https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E5%85%83%E9%BA%BB%E5%B8%832-3-29" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path fill="#34A853" d="M12 2C8.14 2 5 5.14 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.86-3.14-7-7-7z"/>
-                <circle fill="#fff" cx="12" cy="9" r="3.2"/>
-              </svg>
-            </a>
+        <div class="snapshot-grid">
+          <article class="stat-card stat-card--highlight" data-motion>
+            <span class="stat-eyebrow">Activity Days</span>
+            <strong>活動日</strong>
+            <p data-bind="days">火・木・金（週3回）</p>
+          </article>
+          <article class="stat-card" data-motion>
+            <span class="stat-eyebrow">Room</span>
+            <strong>活動教室</strong>
+            <p data-bind="room">M1-4</p>
+          </article>
+          <article class="stat-card" data-motion>
+            <span class="stat-eyebrow">Preparation</span>
+            <strong>準備</strong>
+            <p>基本不要です。資料づくりや下調べは、やってみたい人だけで大丈夫です。</p>
+          </article>
+          <article class="stat-card" data-motion>
+            <span class="stat-eyebrow">Participation</span>
+            <strong>参加しやすさ</strong>
+            <p>見学歓迎。途中退室も問題なく、欠席連絡も不要です。</p>
+          </article>
+        </div>
+
+        <div class="contact-panel" data-motion>
+          <div class="contact-panel__intro">
+            <span class="contact-panel__eyebrow">CONTACT</span>
+            <h3 class="contact-panel__title">見学前のひとこと相談は、ここからすぐできます。</h3>
+            <p class="contact-panel__lead">「今日は行ける？」「教室はどこ？」のような短い連絡でも大丈夫です。返信の早さは LINE がいちばん安定しています。</p>
+            <div class="contact-actions">
+              <a class="btn line" data-bind="line-link" href="#" target="_blank" rel="noopener noreferrer">LINEで見学相談</a>
+              <a class="btn outline" data-email-link data-email-cta href="#">メールで連絡</a>
+            </div>
+            <p class="contact-note">事前連絡は推奨ですが、なくても見学できます。</p>
           </div>
-          <div class="basic-card" data-motion>
-            <strong>アクセス</strong>
-            <span data-bind="route">日比谷線 広尾駅（1番口）徒歩10–11分／大江戸線・南北線 麻布十番駅（4・7番口）徒歩12–14分</span>
-          </div>
-          <div class="basic-card pos-rel has-fab-space" data-motion>
-            <div class="contact-lines">
-              <div class="contact-head">ご連絡はこちらへ</div>
+          <div class="contact-panel__aside">
+            <div class="contact-meta">
+              <span class="contact-meta__label">メール</span>
               <div class="contact-mail">
-                <span class="contact-label">メール</span>
                 <a class="email-link" data-bind="email" data-email-link href="#">（後日掲載）</a>
                 <button class="copy-btn" type="button" data-copy="email">コピー</button>
-                <span class="copy-note" data-copy-note="email" role="status" aria-live="polite"></span>
               </div>
-              <div class="contact-note">LINEは返信が早めです。</div>
+              <span class="copy-note" data-copy-note="email" role="status" aria-live="polite"></span>
             </div>
-            <a class="linebtn" data-bind="line-link" href="#" target="_blank" rel="noopener noreferrer" aria-label="LINEで友だち追加" title="LINEで友だち追加">
-              <img src="assets/line.svg" alt="LINE">
-            </a>
-          </div>
-        </div>
-
-        <div class="divider" aria-hidden="true"></div>
-
-        <div class="card tight" data-motion>
-          <h3 class="h3-in">理念 <span class="chip">方針</span></h3>
-          <p>私たちは、<strong>多角的な理解</strong>をゴールに置きます。勝敗や単一の結論を求めず、常に批判的に検証しながら、理解の解像度を上げていきます。<strong>批判的思考</strong>と、相互の傾聴・安全な場の維持を両輪とします。</p>
-        </div>
-
-        <div class="card tight card-spaced" data-motion>
-          <h3 class="h3-in">活動の概要 <span class="chip">はじめての方へ</span></h3>
-          <ul class="list-compact cols-2">
-            <li><strong>形式</strong>：ディベート／ディスカッション</li>
-            <li><strong>参加</strong>：見学歓迎。<strong>事前連絡は推奨</strong>ですが、<em>無くても可</em>。</li>
-            <li><strong>準備</strong>：<strong>基本不要</strong>（自発的な下調べ・資料作成は歓迎）</li>
-            <li><strong>対象</strong>：<strong>新入生と保護者</strong>に分かりやすい入門設計</li>
-          </ul>
-        </div>
-
-        <div class="card tight card-spaced" data-motion>
-          <h3 class="h3-in">ディベートとディスカッションの違い（部の運用） <span class="chip">比較</span></h3>
-          <p>ディベートは<strong>決まった形式</strong>に則って進行しますが、ディスカッションには決まった形式はなく、<strong>その場の議論に応じて柔軟に</strong>進みます。当部ではどちらの場面でも<strong>勝敗や単一の結論は付けません</strong>。</p>
-          <h4 class="h4-in">ディベートの形式</h4>
-          <p>1つのテーマ（例：<em>同性婚、制服廃止、憲法9条改正</em>など）について、<strong>肯定</strong>と<strong>否定</strong>の陣営に分かれて行います。</p>
-          <div class="attn">このとき取る立場は<strong>個人の実際の考えとは無関係</strong>です。さまざまな立場に立って実際に主張してみることが目的です。</div>
-
-          <div class="tiles">
-            <div class="tile" data-motion>
-              <h5>① 立論</h5>
-              <p>文字通り、論を立てるパートです。初めにその陣営の意見を主張するため、肯定側及び否定側の立論でその後の議論のおおよそが決まります。</p>
-            </div>
-            <div class="tile" data-motion>
-              <h5>② 尋問</h5>
-              <p>先ほどの立論に対して質問を行い、双方の立論で発生した意見のすれ違いのすり合わせを行うパートです。同時に二人の人間が発言する唯一のパートであり、一般的にディベートといった際にイメージされるものと最も近いパートでしょう。</p>
-            </div>
-            <div class="tile" data-motion>
-              <h5>③ 一反（第一反駁）</h5>
-              <p>第一反駁の略称であり、先ほどの立論に対して反駁（反論のようなものです）を行います。立論の補強などを行う場合もあります。ディベートの初心者に最もおすすめされるパートでもあります。</p>
-            </div>
-            <div class="tile" data-motion>
-              <h5>④ 二反（第二反駁）</h5>
-              <p>第二反駁の略称であり、先ほどの第一反駁に対してさらに反駁を行います。ディベートの最後のパートであるため、今までのディベートを総括する役割も担います。かなり難易度は高く、上級生が行うことが多いです。二反を立派に作成できれば一人前でしょう。</p>
+            <div class="contact-meta">
+              <span class="contact-meta__label">所在地と最新情報</span>
+              <p data-bind="addr">〒106-0046 東京都港区元麻布2-3-29</p>
+              <div class="contact-links">
+                <a id="map-open" class="link-chip" href="https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E5%85%83%E9%BA%BB%E5%B8%832-3-29" target="_blank" rel="noopener noreferrer">
+                  <span>Googleマップ</span>
+                </a>
+                <a class="link-chip" data-bind="x-link" href="https://x.com/" target="_blank" rel="noopener noreferrer">
+                  <img src="assets/x-2.svg" alt="">
+                  <span data-bind="x-handle">@azbdebateclub</span>
+                </a>
+              </div>
             </div>
           </div>
+        </div>
+
+        <div class="intro-grid">
+          <article class="card card--tone" data-motion>
+            <h3 class="h3-in">この部で大切にしていること <span class="chip">方針</span></h3>
+            <p>麻布学園の討論部（AZB Debate）は、議論を通じて社会的な課題を多角的に理解します。<strong>結論や勝敗は求めません。</strong> 相手を打ち負かすことより、考えを持ち寄って理解を深めることを大切にしています。</p>
+            <ul class="list-compact">
+              <li>立場が違っても、落ち着いて聞き合える場をつくる</li>
+              <li>初心者でも、まずは考えを言葉にしてみるところから始める</li>
+              <li>大会よりも、普段の対話から得る学びを重視する</li>
+            </ul>
+          </article>
+
+          <article class="card card--steps" data-motion>
+            <h3 class="h3-in">見学するときのイメージ <span class="chip">初参加向け</span></h3>
+            <div class="steps">
+              <div class="step">
+                <span class="step-index">1</span>
+                <p><strong>そのまま教室へ</strong><br>活動日になったら <span data-bind="room">M1-4</span> に来ればOKです。</p>
+              </div>
+              <div class="step">
+                <span class="step-index">2</span>
+                <p><strong>まずは見学からでも大丈夫</strong><br>雰囲気を見て、話せそうなら少しずつ参加できます。</p>
+              </div>
+              <div class="step">
+                <span class="step-index">3</span>
+                <p><strong>気になることはその場で確認</strong><br>テーマ、進め方、途中退室のことも遠慮なく聞けます。</p>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
     <section id="visit" class="sec">
-      <div class="container panel">
-        <h2 class="sec-title motion-layer" data-motion>見学の要点</h2>
-        <p class="lead motion-layer" data-motion>見学や参加に関する基本事項を、短くまとめました。</p>
-        <div class="visit-grid">
-          <div class="info-card" data-motion>
-            <h3 class="info-title">見学</h3>
-            <p>見学歓迎。事前連絡は任意ですが、混雑時はXで調整します。</p>
-          </div>
-          <div class="info-card" data-motion>
-            <h3 class="info-title">途中退室</h3>
-            <p>途中での退室は問題ありません。</p>
-          </div>
-          <div class="info-card" data-motion>
-            <h3 class="info-title">欠席連絡</h3>
-            <p>欠席の連絡は必要ありません。</p>
-          </div>
-          <div class="info-card" data-motion>
-            <h3 class="info-title">準備</h3>
-            <p>準備は基本不要です（自発的な下調べは歓迎）。</p>
-          </div>
-          <div class="info-card" data-motion>
-            <h3 class="info-title">テーマ決定</h3>
-            <p>活動開始後に案を出し、投票で決めます。</p>
-          </div>
+      <div class="container section-shell section-shell--paper">
+        <div class="section-head motion-layer" data-motion>
+          <h2 class="sec-title">初めての方へ</h2>
+          <p class="lead">見学のしやすさ、活動の進み方、初心者が気になりやすい点を先に整理しました。</p>
         </div>
+
+        <div class="visit-layout">
+          <article class="card" data-motion>
+            <h3 class="h3-in">参加しやすいポイント <span class="chip">初心者歓迎</span></h3>
+            <ul class="list-compact">
+              <li>見学歓迎。事前連絡は任意ですが、LINEで一言あると案内がよりスムーズです。</li>
+              <li>欠席連絡は必要ありません。自由参加で、ノルマもありません。</li>
+              <li>途中での退室は問題ありません。まずは短時間だけ様子を見る形でも大丈夫です。</li>
+              <li>テーマは活動開始後に案を出し合い、投票で決めます。</li>
+              <li>準備は基本不要です。必要なら先輩が流れを説明します。</li>
+            </ul>
+          </article>
+
+          <article class="card card--steps" data-motion>
+            <h3 class="h3-in">活動の進み方 <span class="chip">ざっくり</span></h3>
+            <div class="steps">
+              <div class="step">
+                <span class="step-index">1</span>
+                <p><strong>テーマを決める</strong><br>社会や学校生活に関わるテーマを出し合い、その日の話題を決めます。</p>
+              </div>
+              <div class="step">
+                <span class="step-index">2</span>
+                <p><strong>考えを整理する</strong><br>肯定・否定の両方から見てみることで、論点の広がりをつかみます。</p>
+              </div>
+              <div class="step">
+                <span class="step-index">3</span>
+                <p><strong>話してみて振り返る</strong><br>勝敗よりも、どこが面白かったか・何が見えてきたかを共有します。</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <details class="deep-dive" data-motion>
+          <summary>活動の中身をもう少し詳しく見る</summary>
+          <div class="deep-dive__body">
+            <p>ディベートは<strong>決まった形式</strong>に沿って進み、ディスカッションは<strong>その場の議論に応じて柔軟に</strong>進みます。当部ではどちらの場面でも<strong>勝敗や単一の結論は付けません</strong>。</p>
+            <p>1つのテーマ（例：<em>同性婚、制服廃止、憲法9条改正</em>など）について、<strong>肯定</strong>と<strong>否定</strong>の陣営に分かれて考えます。</p>
+            <div class="attn">このとき取る立場は<strong>個人の実際の考えとは無関係</strong>です。さまざまな立場に立って主張を組み立ててみること自体が学びになります。</div>
+            <div class="tiles">
+              <div class="tile">
+                <h5>① 立論</h5>
+                <p>最初に論を立てるパートです。その日の議論の土台をつくります。</p>
+              </div>
+              <div class="tile">
+                <h5>② 尋問</h5>
+                <p>相手の立論に質問し、論点のズレや前提を整理していきます。</p>
+              </div>
+              <div class="tile">
+                <h5>③ 一反</h5>
+                <p>相手の主張に対する反駁を行います。初心者も挑戦しやすいパートです。</p>
+              </div>
+              <div class="tile">
+                <h5>④ 二反</h5>
+                <p>議論全体を踏まえて総括するパートです。上級生が担当することも多いです。</p>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </section>
 
     <section id="parents" class="sec">
-      <div class="container panel">
-        <h2 class="sec-title motion-layer" data-motion>保護者向け <span class="chip">安心材料</span></h2>
-        <p class="lead motion-layer" data-motion>保護者の方が気になりやすい点を、事実ベースで整理しました。</p>
+      <div class="container section-shell section-shell--soft">
+        <div class="section-head motion-layer" data-motion>
+          <h2 class="sec-title">保護者向け <span class="chip">安心材料</span></h2>
+          <p class="lead">活動方針、安全面、費用まわりなど、保護者の方が確認しやすい項目だけを簡潔に整理しました。</p>
+        </div>
         <div class="parents-grid">
-          <div class="info-card" data-motion>
-            <h3 class="info-title">勝敗と大会</h3>
+          <article class="parent-card" data-motion>
+            <h3>勝敗と大会</h3>
             <p>勝敗は付けず、理念と反する大会への出場は行いません。</p>
-          </div>
-          <div class="info-card" data-motion>
-            <h3 class="info-title">教員の関与</h3>
+          </article>
+          <article class="parent-card" data-motion>
+            <h3>教員の関与</h3>
             <p>教員の関与は基本ありません。合宿など必要な際に同伴します。</p>
-          </div>
-          <div class="info-card" data-motion>
-            <h3 class="info-title">定期試験前</h3>
+          </article>
+          <article class="parent-card" data-motion>
+            <h3>定期試験前</h3>
             <p>定期試験1週間前からは活動を停止します。</p>
-          </div>
-          <div class="info-card" data-motion>
-            <h3 class="info-title">費用</h3>
+          </article>
+          <article class="parent-card" data-motion>
+            <h3>費用</h3>
             <p>部費は徴収していません。合宿の際は参加費が必要です。</p>
-          </div>
+          </article>
         </div>
       </div>
     </section>
 
     <section id="qa" class="sec">
-      <div class="container panel">
-        <h2 class="sec-title motion-layer" data-motion>Q&amp;A</h2>
-        <p class="lead motion-layer" data-motion>よくいただく質問にお答えします。詳細はXでも告知します。</p>
-        <div class="qa-controls motion-layer" data-motion role="group" aria-label="Q&amp;Aをまとめて操作">
-          <button class="btn subtle" type="button" data-qa-action="open">すべて開く</button>
-          <button class="btn subtle" type="button" data-qa-action="close">すべて閉じる</button>
+      <div class="container section-shell section-shell--contrast">
+        <div class="section-head motion-layer" data-motion>
+          <h2 class="sec-title">Q&amp;A</h2>
+          <p class="lead">まず見学する前によく出る質問を先頭に置きました。さらに細かい点は、下の追加項目で確認できます。</p>
         </div>
-        <div class="cards">
-          <div class="card"><details data-motion>
+
+        <div class="qa-grid">
+          <details data-motion>
             <summary><strong>見学はできますか？</strong></summary>
-            <div>できます。事前連絡は任意ですが、混雑時は調整のためXで声をかけてください。</div>
-          </details></div>
+            <div>できます。事前連絡は任意ですが、混雑時は調整のため X や LINE で声をかけていただけると案内しやすいです。</div>
+          </details>
 
-          <div class="card"><details data-motion>
+          <details data-motion>
             <summary><strong>最新情報はどこで見られますか？</strong></summary>
-              <div>公式Xにて活動の内容などを投稿しています。<a class="x-text" data-bind="x-link" href="https://x.com/" target="_blank" rel="noopener noreferrer">@ハンドル</a></div>
-          </details></div>
+            <div>公式 X にて活動内容やお知らせを投稿しています。<a class="x-text" data-bind="x-link" href="https://x.com/" target="_blank" rel="noopener noreferrer">@azbdebateclub</a></div>
+          </details>
 
-          <div class="card"><details data-motion>
-            <summary><strong>指導教員の関与はありますか？</strong></summary>
-            <div>教員の関与は基本的にありません。合宿など必要な際に同伴することはありますが、生徒主体で運営しています（ご連絡はXやメールへ）。</div>
-          </details></div>
+          <details data-motion>
+            <summary><strong>初心者でもついていけますか？</strong></summary>
+            <div>先輩がサポートします。まずは見学から始めて、話せそうなところだけ参加する形でも大丈夫です。</div>
+          </details>
 
-          <div class="card"><details data-motion>
-            <summary><strong>大会に出場していますか？</strong></summary>
-            <div>麻布学園討論部ではあくまで議論を通じて理解を深めることを重視し、勝敗の決定などは普段の活動でも行なっていません。同様に、理念と反するような大会への出場は行っていません。</div>
-          </details></div>
+          <details data-motion>
+            <summary><strong>途中参加・途中退室はできますか？</strong></summary>
+            <div>ディベートの途中参加は場面によって難しいことがありますが、途中での退室は問題ありません。</div>
+          </details>
 
-          <div class="card"><details data-motion>
+          <details data-motion>
+            <summary><strong>欠席・遅刻の連絡は必要ですか？</strong></summary>
+            <div>活動は自由参加でノルマもありません。欠席の連絡は必要ありません。</div>
+          </details>
+
+          <details data-motion>
             <summary><strong>部費や費用はかかりますか？</strong></summary>
             <div>部費は徴収していません。合宿の際には参加費が必要です。</div>
-          </details></div>
-
-          <div class="card"><details data-motion>
-            <summary><strong>定期試験前は活動どうなりますか？</strong></summary>
-            <div>定期試験1週間前からは活動を停止します。活動にも繋がるため学習も適度に頑張ってください。</div>
-          </details></div>
-
-          <div class="card"><details data-motion>
-            <summary><strong>欠席・遅刻の連絡は必要ですか？</strong></summary>
-            <div>活動は自由参加でノルマなどはありません。欠席の連絡は必要ありません。</div>
-          </details></div>
-
-          <div class="card"><details data-motion>
-            <summary><strong>途中参加・途中退室はできますか？</strong></summary>
-            <div>ディベートの際はシステム的に途中からの参加は難しいですが、途中での退室は問題ありません。</div>
-          </details></div>
-
-          <div class="card"><details data-motion>
-            <summary><strong>初心者でもついていけますか？</strong></summary>
-            <div>先輩が綿密にサポートします。ディベートはやればやっただけ上手くなるので、ぜひ積極的に参加しましょう。</div>
-          </details></div>
-
-          <div class="card"><details data-motion>
-            <summary><strong>テーマはどう決めますか？</strong></summary>
-            <div>テーマは活動開始後に各々が案を出し、投票で決めます。</div>
-          </details></div>
-
-          <div class="card"><details data-motion>
-            <summary><strong>なぜ勝敗を付けないのですか？</strong></summary>
-            <div>我々にとってディベートは目的ではなく手段であり、目的は理解を深めることです。勝敗の決定の必要性がありません。</div>
-          </details></div>
+          </details>
         </div>
+
+        <details class="qa-more" data-motion>
+          <summary>さらに質問を見る</summary>
+          <div class="qa-more__list">
+            <div class="qa-more__item">
+              <strong>指導教員の関与はありますか？</strong>
+              <p>教員の関与は基本的にありません。合宿など必要な際に同伴することはありますが、生徒主体で運営しています。</p>
+            </div>
+            <div class="qa-more__item">
+              <strong>大会に出場していますか？</strong>
+              <p>議論を通じて理解を深めることを重視しているため、理念と反するような大会への出場は行っていません。</p>
+            </div>
+            <div class="qa-more__item">
+              <strong>定期試験前は活動どうなりますか？</strong>
+              <p>定期試験1週間前からは活動を停止します。学習との両立を大切にしています。</p>
+            </div>
+            <div class="qa-more__item">
+              <strong>テーマはどう決めますか？</strong>
+              <p>活動開始後に各々が案を出し、投票で決めます。</p>
+            </div>
+            <div class="qa-more__item">
+              <strong>なぜ勝敗を付けないのですか？</strong>
+              <p>私たちにとってディベートは目的ではなく手段であり、目的は理解を深めることだからです。</p>
+            </div>
+          </div>
+        </details>
       </div>
     </section>
   </main>
