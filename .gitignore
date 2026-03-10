@@ -1,12 +1,25 @@
+# OS files
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100/
+.Trashes/
+
+# Repository-local instructions
 AGENTS.md
 
-# Playwright local artifacts
+# Tooling artifacts
 .playwright/
 .playwright-cli/
-
-# Local screenshots / debug outputs
 output/
+node_modules/
+
+# Editor and temporary files
+*.swp
+*.swo
+*.tmp
+*.temp
 
 # Logs
 *.log
