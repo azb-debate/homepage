@@ -130,34 +130,6 @@
       requestAnimationFrame(update);
     };
 
-    const alignHashTarget = () => {
-      const id = decodeURIComponent(location.hash || '').replace(/^#/, '');
-      if (!id) return;
-      const target = byId(id);
-      if (!target) return;
-      const top = target.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0);
-      window.scrollTo({ top: Math.max(0, Math.round(top - getHeaderH() - 8)), behavior: 'auto' });
-    };
-
-    const syncHashPosition = () => {
-      const id = decodeURIComponent(location.hash || '').replace(/^#/, '');
-      if (!id) return;
-      setActive(id);
-      alignHashTarget();
-      requestAnimationFrame(() => {
-        alignHashTarget();
-        onScroll();
-      });
-      window.setTimeout(() => {
-        alignHashTarget();
-        onScroll();
-      }, 120);
-      window.setTimeout(() => {
-        alignHashTarget();
-        onScroll();
-      }, 420);
-    };
-
     links.forEach(a => {
       a.addEventListener('click', () => {
         const id = (a.getAttribute('href') || '').replace(/^#/, '');
@@ -168,12 +140,16 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     window.addEventListener('hashchange', () => {
-      syncHashPosition();
+      const id = decodeURIComponent(location.hash || '').replace(/^#/, '');
+      if (id) setActive(id);
+      onScroll();
     });
 
     if (location.hash) {
       window.addEventListener('load', () => {
-        syncHashPosition();
+        const id = decodeURIComponent(location.hash || '').replace(/^#/, '');
+        if (id) setActive(id);
+        onScroll();
       }, { once: true });
     } else {
       onScroll();
