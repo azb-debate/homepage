@@ -5,6 +5,8 @@
 ._*
 .Spotlight-V100/
 .Trashes/
+.codex/
+.vscode/
 
 # Repository-local instructions
 AGENTS.md
